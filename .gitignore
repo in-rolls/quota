@@ -1,0 +1,9 @@
+data/reds/
+data/shrug/
+.DS_Store
+data/rajasthan/background/pdfs/91-Municipal General Election Book-2021.pdf
+.Rproj.user
+.Rhistory
+data/census/*
+data/mnrega/2023-csv/*
+.RData

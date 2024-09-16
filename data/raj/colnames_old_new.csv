@@ -1,0 +1,165 @@
+old,new
+क्रम संख्या,sr_no
+पंचायत,panchayat
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|पूर्ण,anganwadi_other_rural_infra_exp_in_lakhs_completed
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|चल रहे/निलंबित,anganwadi_other_rural_infra_exp_in_lakhs_ongoing_suspended
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|स्वीकृत कार्य,anganwadi_other_rural_infra_exp_in_lakhs_approved
+Coastal Areas|संख्या व्यय (लाखों में)|पूर्ण,coastal_areas_exp_in_lakhs_completed
+Coastal Areas|संख्या व्यय (लाखों में)|चल रहे/निलंबित,coastal_areas_exp_in_lakhs_ongoing_suspended
+Coastal Areas|संख्या व्यय (लाखों में)|स्वीकृत कार्य,coastal_areas_exp_in_lakhs_approved
+Fisheries|संख्या व्यय (लाखों में)|पूर्ण,fisheries_exp_in_lakhs_completed
+Fisheries|संख्या व्यय (लाखों में)|चल रहे/निलंबित,fisheries_exp_in_lakhs_ongoing_suspended
+Fisheries|संख्या व्यय (लाखों में)|स्वीकृत कार्य,fisheries_exp_in_lakhs_approved
+Food Grain|संख्या व्यय (लाखों में)|पूर्ण,food_grain_exp_in_lakhs_completed
+Food Grain|संख्या व्यय (लाखों में)|चल रहे/निलंबित,food_grain_exp_in_lakhs_ongoing_suspended
+Food Grain|संख्या व्यय (लाखों में)|स्वीकृत कार्य,food_grain_exp_in_lakhs_approved
+Play Ground|संख्या व्यय (लाखों में)|पूर्ण,play_ground_exp_in_lakhs_completed
+Play Ground|संख्या व्यय (लाखों में)|चल रहे/निलंबित,play_ground_exp_in_lakhs_ongoing_suspended
+Play Ground|संख्या व्यय (लाखों में)|स्वीकृत कार्य,play_ground_exp_in_lakhs_approved
+Rural Drinking Water|संख्या व्यय (लाखों में)|पूर्ण,rural_drinking_water_exp_in_lakhs_completed
+Rural Drinking Water|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_drinking_water_exp_in_lakhs_ongoing_suspended
+Rural Drinking Water|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_drinking_water_exp_in_lakhs_approved
+Rural Sanitation|संख्या व्यय (लाखों में)|पूर्ण,rural_sanitation_exp_in_lakhs_completed
+Rural Sanitation|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_sanitation_exp_in_lakhs_ongoing_suspended
+Rural Sanitation|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_sanitation_exp_in_lakhs_approved
+अन्य कार्य|संख्या व्यय (लाखों में)|पूर्ण,other_works_exp_in_lakhs_completed
+अन्य कार्य|संख्या व्यय (लाखों में)|चल रहे/निलंबित,other_works_exp_in_lakhs_ongoing_suspended
+अन्य कार्य|संख्या व्यय (लाखों में)|स्वीकृत कार्य,other_works_exp_in_lakhs_approved
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|पूर्ण,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_completed
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|चल रहे/निलंबित,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_ongoing_suspended
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|स्वीकृत कार्य,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_approved
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|पूर्ण,rural_connectivity_exp_in_lakhs_completed
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_connectivity_exp_in_lakhs_ongoing_suspended
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_connectivity_exp_in_lakhs | Accepted work
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|पूर्ण,water_conservation_and_harvesting_exp_in_lakhs_completed
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,water_conservation_and_harvesting_exp_in_lakhs_ongoing_suspended
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,water_conservation_and_harvesting_exp_in_lakhs_approved
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|पूर्ण,renovation_trad_water_bodies_exp_in_lakhs_completed
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,renovation_trad_water_bodies_exp_in_lakhs_ongoing_suspended
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,renovation_trad_water_bodies_exp_in_lakhs_approved
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|पूर्ण,flood_control_and_protection_exp_in_lakhs_completed
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,flood_control_and_protection_exp_in_lakhs_ongoing_suspended
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,flood_control_and_protection_exp_in_lakhs_approved
+भूमि विकास|संख्या व्यय (लाखों में)|पूर्ण,land_development_exp_in_lakhs_completed
+भूमि विकास|संख्या व्यय (लाखों में)|चल रहे/निलंबित,land_development_exp_in_lakhs_ongoing_suspended
+भूमि विकास|संख्या व्यय (लाखों में)|स्वीकृत कार्य,land_development_exp_in_lakhs_approved
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|पूर्ण,bharat_nirman_service_center_exp_in_lakhs_completed
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|चल रहे/निलंबित,bharat_nirman_service_center_exp_in_lakhs_ongoing_suspended
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|स्वीकृत कार्य,bharat_nirman_service_center_exp_in_lakhs_approved
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|पूर्ण,micro_irrigation_work_exp_in_lakhs_completed
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|चल रहे/निलंबित,micro_irrigation_work_exp_in_lakhs_ongoing_suspended
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|स्वीकृत कार्य,micro_irrigation_work_exp_in_lakhs_approved
+सूखारोधन|संख्या व्यय (लाखों में)|पूर्ण,drought_prevention_exp_in_lakhs_completed
+सूखारोधन|संख्या व्यय (लाखों में)|चल रहे/निलंबित,drought_prevention_exp_in_lakhs_ongoing_suspended
+सूखारोधन|संख्या व्यय (लाखों में)|स्वीकृत कार्य,drought_prevention_exp_in_lakhs_approved
+कुल|संख्या व्यय (लाखों में)|पूर्ण,total_exp_in_lakhs_completed
+कुल|संख्या व्यय (लाखों में)|चल रहे/निलंबित,total_exp_in_lakhs_ongoing_suspended
+कुल|संख्या व्यय (लाखों में)|स्वीकृत कार्य,total_exp_in_lakhs_approved
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|पूर्ण,anganwadi_other_rural_infra_exp_in_lakhs
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|चल रहे/निलंबित,anganwadi_other_rural_infra_exp_in_lakhs_ongoing_suspended
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|स्वीकृत कार्य,anganwadi_other_rural_infra_exp_in_lakhs_approved
+Coastal Areas|संख्या व्यय (लाखों में)|पूर्ण,coastal_areas_exp_in_lakhs_completed
+Coastal Areas|संख्या व्यय (लाखों में)|चल रहे/निलंबित,coastal_areas_exp_in_lakhs_ongoing_suspended
+Coastal Areas|संख्या व्यय (लाखों में)|स्वीकृत कार्य,coastal_areas_exp_in_lakhs_approved
+Fisheries|संख्या व्यय (लाखों में)|पूर्ण,fisheries_exp_in_lakhs_completed
+Fisheries|संख्या व्यय (लाखों में)|चल रहे/निलंबित,fisheries_exp_in_lakhs_ongoing_suspended
+Fisheries|संख्या व्यय (लाखों में)|स्वीकृत कार्य,fisheries_exp_in_lakhs_approved
+Food Grain|संख्या व्यय (लाखों में)|पूर्ण,food_grain_exp_in_lakhs | Complete
+Food Grain|संख्या व्यय (लाखों में)|चल रहे/निलंबित,food_grain_exp_in_lakhs_ongoing_suspended
+Food Grain|संख्या व्यय (लाखों में)|स्वीकृत कार्य,food_grain_exp_in_lakhs_approved
+Play Ground|संख्या व्यय (लाखों में)|पूर्ण,play_ground_exp_in_lakhs_completed
+Play Ground|संख्या व्यय (लाखों में)|चल रहे/निलंबित,play_ground_exp_in_lakhs_ongoing_suspended
+Play Ground|संख्या व्यय (लाखों में)|स्वीकृत कार्य,play_ground_exp_in_lakhs_approved
+Rural Drinking Water|संख्या व्यय (लाखों में)|पूर्ण,rural_drinking_water_exp_in_lakhs_completed
+Rural Drinking Water|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_drinking_water_exp_in_lakhs_ongoing_suspended
+Rural Drinking Water|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_drinking_water_exp_in_lakhs_approved
+Rural Sanitation|संख्या व्यय (लाखों में)|पूर्ण,rural_sanitation_exp_in_lakhs_completed
+Rural Sanitation|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_sanitation_exp_in_lakhs_ongoing_suspended
+Rural Sanitation|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_sanitation_exp_in_lakhs_approved
+अन्य कार्य|संख्या व्यय (लाखों में)|पूर्ण,other_works_exp_in_lakhs_completed
+अन्य कार्य|संख्या व्यय (लाखों में)|चल रहे/निलंबित,other_works_exp_in_lakhs_ongoing_suspended
+अन्य कार्य|संख्या व्यय (लाखों में)|स्वीकृत कार्य,other_works_exp_in_lakhs_approved
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|पूर्ण,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_completed
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|चल रहे/निलंबित,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_ongoing_suspended
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|स्वीकृत कार्य,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_approved
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|पूर्ण,rural_connectivity_exp_in_lakhs_completed
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_connectivity_exp_in_lakhs_ongoing_suspended
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_connectivity_exp_in_lakhs | Accepted work
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|पूर्ण,water_conservation_and_harvesting_exp_in_lakhs_completed
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,water_conservation_and_harvesting_exp_in_lakhs_ongoing_suspended
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,water_conservation_and_harvesting_exp_in_lakhs_approved
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|पूर्ण,renovation_trad_water_bodies_exp_in_lakhs_completed
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,renovation_trad_water_bodies_exp_in_lakhs_ongoing_suspended
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,renovation_trad_water_bodies_exp_in_lakhs_approved
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|पूर्ण,flood_control_and_protection_exp_in_lakhs_completed
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,flood_control_and_protection_exp_in_lakhs_ongoing_suspended
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,flood_control_and_protection_exp_in_lakhs_approved
+भूमि विकास|संख्या व्यय (लाखों में)|पूर्ण,land_development_exp_in_lakhs_completed
+भूमि विकास|संख्या व्यय (लाखों में)|चल रहे/निलंबित,land_development_exp_in_lakhs_ongoing_suspended
+भूमि विकास|संख्या व्यय (लाखों में)|स्वीकृत कार्य,land_development_exp_in_lakhs_approved
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|पूर्ण,bharat_nirman_service_center_exp_in_lakhs_completed
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|चल रहे/निलंबित,bharat_nirman_service_center_exp_in_lakhs_ongoing_suspended
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|स्वीकृत कार्य,bharat_nirman_service_center_exp_in_lakhs_approved
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|पूर्ण,micro_irrigation_work_exp_in_lakhs_completed
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|चल रहे/निलंबित,micro_irrigation_work_exp_in_lakhs_ongoing_suspended
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|स्वीकृत कार्य,micro_irrigation_work_exp_in_lakhs_approved
+सूखारोधन|संख्या व्यय (लाखों में)|पूर्ण,Smokhodhan | _exp_in_lakhs_completed
+सूखारोधन|संख्या व्यय (लाखों में)|चल रहे/निलंबित,Sukhanodhan | _exp_in_lakhs_ongoing_suspended
+सूखारोधन|संख्या व्यय (लाखों में)|स्वीकृत कार्य,Sukhanodhan | _exp_in_lakhs_approved
+कुल|संख्या व्यय (लाखों में)|पूर्ण,total_exp_in_lakhs_completed
+कुल|संख्या व्यय (लाखों में)|चल रहे/निलंबित,total_exp_in_lakhs_ongoing_suspended
+कुल|संख्या व्यय (लाखों में)|स्वीकृत कार्य,total_exp_in_lakhs_approved
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|पूर्ण,anganwadi_other_rural_infra_exp_in_lakhs_completed
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|चल रहे/निलंबित,anganwadi_other_rural_infra_exp_in_lakhs_ongoing_suspended
+Anganwadi/Other Rural Infrastructure|संख्या व्यय (लाखों में)|स्वीकृत कार्य,anganwadi_other_rural_infra_exp_in_lakhs_approved
+Coastal Areas|संख्या व्यय (लाखों में)|पूर्ण,coastal_areas_exp_in_lakhs_completed
+Coastal Areas|संख्या व्यय (लाखों में)|चल रहे/निलंबित,coastal_areas_exp_in_lakhs_ongoing_suspended
+Coastal Areas|संख्या व्यय (लाखों में)|स्वीकृत कार्य,coastal_areas_exp_in_lakhs_approved
+Fisheries|संख्या व्यय (लाखों में)|पूर्ण,fisheries_exp_in_lakhs_completed
+Fisheries|संख्या व्यय (लाखों में)|चल रहे/निलंबित,fisheries_exp_in_lakhs_ongoing_suspended
+Fisheries|संख्या व्यय (लाखों में)|स्वीकृत कार्य,fisheries_exp_in_lakhs_approved
+Food Grain|संख्या व्यय (लाखों में)|पूर्ण,food_grain_exp_in_lakhs | Complete
+Food Grain|संख्या व्यय (लाखों में)|चल रहे/निलंबित,food_grain_exp_in_lakhs_ongoing_suspended
+Food Grain|संख्या व्यय (लाखों में)|स्वीकृत कार्य,food_grain_exp_in_lakhs_approved
+Play Ground|संख्या व्यय (लाखों में)|पूर्ण,play_ground_exp_in_lakhs_completed
+Play Ground|संख्या व्यय (लाखों में)|चल रहे/निलंबित,play_ground_exp_in_lakhs_ongoing_suspended
+Play Ground|संख्या व्यय (लाखों में)|स्वीकृत कार्य,play_ground_exp_in_lakhs_approved
+Rural Drinking Water|संख्या व्यय (लाखों में)|पूर्ण,rural_drinking_water_exp_in_lakhs_completed
+Rural Drinking Water|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_drinking_water_exp_in_lakhs_ongoing_suspended
+Rural Drinking Water|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_drinking_water_exp_in_lakhs_approved
+Rural Sanitation|संख्या व्यय (लाखों में)|पूर्ण,rural_sanitation_exp_in_lakhs_completed
+Rural Sanitation|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_sanitation_exp_in_lakhs_ongoing_suspended
+Rural Sanitation|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_sanitation_exp_in_lakhs_approved
+अन्य कार्य|संख्या व्यय (लाखों में)|पूर्ण,other_works_exp_in_lakhs_completed
+अन्य कार्य|संख्या व्यय (लाखों में)|चल रहे/निलंबित,other_works_exp_in_lakhs_ongoing_suspended
+अन्य कार्य|संख्या व्यय (लाखों में)|स्वीकृत कार्य,other_works_exp_in_lakhs_approved
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|पूर्ण,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_completed
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|चल रहे/निलंबित,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_ongoing_suspended
+एससी/एसटी/आईएवाई/एलआर लाभग्राही को सिंचाई सुविधाए|संख्या व्यय (लाखों में)|स्वीकृत कार्य,sc_st_iay_lr_beneficiary_irrigation_exp_in_lakhs_approved
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|पूर्ण,rural_connectivity_exp_in_lakhs_completed
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|चल रहे/निलंबित,rural_connectivity_exp_in_lakhs_ongoing_suspended
+ग्रामीण संयोजकता|संख्या व्यय (लाखों में)|स्वीकृत कार्य,rural_connectivity_exp_in_lakhs | Accepted work
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|पूर्ण,water_conservation_and_harvesting_exp_in_lakhs_completed
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,water_conservation_and_harvesting_exp_in_lakhs_ongoing_suspended
+जल संरक्षण और जल संग्रहण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,water_conservation_and_harvesting_exp_in_lakhs_approved
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|पूर्ण,renovation_trad_water_bodies_exp_in_lakhs_completed
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,renovation_trad_water_bodies_exp_in_lakhs_ongoing_suspended
+परंपरागत जल निकाय का नवीकरण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,renovation_trad_water_bodies_exp_in_lakhs_approved
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|पूर्ण,flood_control_and_protection_exp_in_lakhs_completed
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|चल रहे/निलंबित,flood_control_and_protection_exp_in_lakhs_ongoing_suspended
+बाढ़ नियंत्रण और संरक्षण|संख्या व्यय (लाखों में)|स्वीकृत कार्य,flood_control_and_protection_exp_in_lakhs_approved
+भूमि विकास|संख्या व्यय (लाखों में)|पूर्ण,land_development_exp_in_lakhs_completed
+भूमि विकास|संख्या व्यय (लाखों में)|चल रहे/निलंबित,land_development_exp_in_lakhs_ongoing_suspended
+भूमि विकास|संख्या व्यय (लाखों में)|स्वीकृत कार्य,land_development_exp_in_lakhs_approved
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|पूर्ण,bharat_nirman_service_center_exp_in_lakhs_completed
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|चल रहे/निलंबित,bharat_nirman_service_center_exp_in_lakhs_ongoing_suspended
+भारत निर्माण सेवा केन्द्र|संख्या व्यय (लाखों में)|स्वीकृत कार्य,bharat_nirman_service_center_exp_in_lakhs_approved
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|पूर्ण,micro_irrigation_work_exp_in_lakhs_completed
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|चल रहे/निलंबित,micro_irrigation_work_exp_in_lakhs_ongoing_suspended
+सूक्ष्म सिंचाई कार्य|संख्या व्यय (लाखों में)|स्वीकृत कार्य,micro_irrigation_work_exp_in_lakhs_approved
+सूखारोधन|संख्या व्यय (लाखों में)|पूर्ण,drought_prevention_exp_in_lakhs_completed
+सूखारोधन|संख्या व्यय (लाखों में)|चल रहे/निलंबित,drought_prevention_exp_in_lakhs_ongoing_suspended
+सूखारोधन|संख्या व्यय (लाखों में)|स्वीकृत कार्य,drought_prevention_exp_in_lakhs_approved
+कुल|संख्या व्यय (लाखों में)|पूर्ण,total_exp_in_lakhs_completed
+कुल|संख्या व्यय (लाखों में)|चल रहे/निलंबित,total_exp_in_lakhs_ongoing_suspended
+कुल|संख्या व्यय (लाखों में)|स्वीकृत कार्य,total_exp_in_lakhs_approved
