@@ -7,6 +7,9 @@ library(broom)
 library(ggthemes)
 library(here)
 
+# Source utils
+source(here("scripts/00_utils.R"))
+
 # Load dat
 mnrega_elex_raj_05_10 <- read_parquet(here("data/raj/mnrega_elex_raj_05_10.parquet"))
 mnrega_elex_raj_05_20 <- read_parquet(here("data/raj/mnrega_elex_raj_05_20.parquet"))
@@ -54,22 +57,14 @@ mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
 model_names <- paste0("lm_", column_groups)
 mod_cols <- paste0(column_groups, "_tot_11_14")
 
-fit_model_for_group <- function(column_name, data) {
-     sufficient_data <- complete.cases(data[[column_name]], data$female_res_2005, data$female_res_2010)
-     if (sum(sufficient_data) > 0) {
-          lm(as.formula(paste(column_name, "~ female_res_2005 + female_res_2010")), data = data)
-     } else {
-          NULL  # If a model fails ...
-     }
-}
-
 # Apply the model
 models <- set_names(mod_cols, mod_cols) %>% 
-     map(~ fit_model_for_group(.x, mnrega_elex_raj_05_10))
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = mnrega_elex_raj_05_10))
 
 # Tidy and Glance
-model_tidies  <- map(models, tidy)
+model_tidies  <- map(models, ~ tidy(.x) %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
 model_glances <- map(models, glance)
+proportion_significant_pvalues(models)
 
 # Number of projects: All Rural Roads Sanitation Water Conservation Traditional Water
 selected_model_names <- paste0(c("total_comp_project",
@@ -412,3 +407,126 @@ p_values <- set_names(mod_cols, mod_cols) %>%
                                      mnrega_elex_raj_05_20$case == '1_1_1_1' | 
                                           mnrega_elex_raj_05_20$case == '0_0_0_0', ]))
 
+### All
+
+# Model Names
+model_names <- paste0("lm_", column_groups)
+mod_cols <- paste0(column_groups, "_tot_11_23")
+
+# Function to fit 
+fit_model_for_group <- function(column_name, data) {
+     sufficient_data <- complete.cases(data[[column_name]], data$female_res_2005, data$female_res_2010)
+     if (sum(sufficient_data) > 0) {
+          lm(as.formula(paste(column_name, "~ female_res_2005*female_res_2010*female_res_2015*female_res_2020")), data = data)
+     } else {
+          NULL  # Indicate failure to fit the model due to insufficient data
+     }
+}
+# Apply the model fitting function across all specified column groups
+models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ fit_model_for_group(.x, mnrega_elex_raj_05_20))
+
+# Tidy and Glance
+model_tidies <- map(models, tidy)
+model_glances <- map(models, glance)
+
+# Number of projects: All Rural Roads Sanitation Water Conservation Traditional Water
+selected_model_names <- paste0(c("total_comp_project",
+                                 "connectivity_comp_project",
+                                 "childcare_comp_project",
+                                 "sanitation_comp_project",
+                                 "water_conserve_comp_project",
+                                 "water_trad_comp_project"), "_tot_11_23")
+
+# Filter clean_models to only include the specified models
+selected_models <- models[names(models) %in% selected_model_names]
+
+stargazer(selected_models,
+          type = "latex", 
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+          covariate.labels = c("2005", "2010", "2015", "2020", 
+                               "2005*2010", "2005*2015", "2010*2015", 
+                               "2005*2020", "2010*2020", "2015*2020", "2005*2010*2015",
+                               "2005*2010*2020", "2005*2015*2020", "2010*2015*2020", "2005*2010*2015*2020",
+                               "Constant"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          add.lines = list(c("Covariates", rep("No", 5))),
+          omit.stat = c("rsq", "ser", "f"),
+          single.row = FALSE,
+          digits = 2,
+          header = TRUE,
+          label = "main_mnrega_2011_2023_all",
+          dep.var.labels.include = FALSE,
+          dep.var.caption = "",
+          no.space = TRUE,
+          star.cutoffs = NULL,
+          report = "vcs",
+          notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
+                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
+                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
+                    "Water Conservation: Number of projects to improve water conservation (2011--2023);",
+                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+          notes.align = "l",
+          out = here("tabs/mnrega_raj_05_20_main_all.tex"))
+
+### Dosage
+
+mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
+     mutate(female_res_sum = rowSums(select(., female_res_2005, female_res_2010, female_res_2015, female_res_2020)),
+            female_res_sum_factor = factor(female_res_sum, levels = 0:max(female_res_sum)))
+
+# Model Names
+model_names <- paste0("lm_", column_groups)
+mod_cols <- paste0(column_groups, "_tot_11_23")
+
+# Function to fit 
+fit_model_for_group <- function(column_name, data) {
+     sufficient_data <- complete.cases(data[[column_name]], data$female_res_2005, data$female_res_2010)
+     if (sum(sufficient_data) > 0) {
+          lm(as.formula(paste(column_name, "~ female_res_sum_factor")), data = data)
+     } else {
+          NULL  # Indicate failure to fit the model due to insufficient data
+     }
+}
+# Apply the model fitting function across all specified column groups
+models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ fit_model_for_group(.x, mnrega_elex_raj_05_20))
+
+# Tidy and Glance
+model_tidies <- map(models, tidy)
+model_glances <- map(models, glance)
+
+# Number of projects: All Rural Roads Sanitation Water Conservation Traditional Water
+selected_model_names <- paste0(c("total_comp_project",
+                                 "connectivity_comp_project",
+                                 "childcare_comp_project",
+                                 "sanitation_comp_project",
+                                 "water_conserve_comp_project",
+                                 "water_trad_comp_project"), "_tot_11_23")
+
+# Filter clean_models to only include the specified models
+selected_models <- models[names(models) %in% selected_model_names]
+
+stargazer(selected_models,
+          type = "latex", 
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+          covariate.labels = c("Once", "Twice", "Thrice", "Four Times", "Constant"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          add.lines = list(c("Covariates", rep("No", 5))),
+          omit.stat = c("rsq", "ser", "f"),
+          single.row = FALSE,
+          digits = 2,
+          header = TRUE,
+          label = "main_mnrega_2011_2023_dosage",
+          dep.var.labels.include = FALSE,
+          dep.var.caption = "",
+          no.space = TRUE,
+          star.cutoffs = NULL,
+          report = "vcs",
+          notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
+                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
+                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
+                    "Water Conservation: Number of projects to improve water conservation (2011--2023);",
+                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+          notes.align = "l",
+          out = here("tabs/mnrega_raj_05_20_main_dosage.tex"))
