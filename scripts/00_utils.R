@@ -1,5 +1,5 @@
-
 # Gen. Util. Functions
+
 # Remove diacritics, convert to lowercase, convert to single ws, trim extra ws, remove punct
 normalize_string <- function(input_string) {
      normalized_string <- stri_trans_general(input_string, "Latin-ASCII")
@@ -26,3 +26,33 @@ add_year_suffix_remove_year_col <- function(df) {
           select(-year)
      return(df)
 }
+
+# Proportion significant p-values in a list of models via tidy
+proportion_significant_pvalues <- function(models) {
+
+count_significant_pvalues <- function(model) {
+     tidy_model <- tidy(model)
+     tidy_model %>%
+          filter(term != "(Intercept)" & p.value < 0.05) %>%
+          nrow()
+}
+
+count_coefficients <- function(model) {
+     tidy_model <- tidy(model)
+     tidy_model %>%
+          filter(term != "(Intercept)") %>%
+          nrow()
+}
+
+total_significant_pvalues <- models %>%
+     map_dbl(count_significant_pvalues) %>%
+     sum()
+
+total_coefficients <- models %>%
+     map_dbl(count_coefficients) %>%
+     sum()
+
+proportion_significant <- total_significant_pvalues / total_coefficients
+proportion_significant
+}
+

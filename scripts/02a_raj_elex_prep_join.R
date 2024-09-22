@@ -5,6 +5,9 @@ library(tidyverse)
 library(stringi)
 library(here)
 
+# Load util
+source(here("scripts/00_utils.R"))
+
 # Load dat
 
 ## Excluding Baran because they did not follow any reservation recommendations -
@@ -48,10 +51,11 @@ elex_raj_05_20 <- read_csv(here("data/raj/sp_05_10_15_20_best_manual.csv")) %>%
             female_res_2005 = ifelse( grepl("W",  reservation_2005) == TRUE, 1, 0),
             female_res_2010 = ifelse( grepl("W",  reservation_2010) == TRUE, 1, 0),
             female_res_2015 = ifelse( grepl("W",  reservation_2015) == TRUE, 1, 0),
-            female_res_2020 = ifelse( grepl("W",  reservation_2015) == TRUE, 1, 0),
+            female_res_2020 = ifelse( grepl("W",  reservation_2020) == TRUE, 1, 0),
             case = paste(female_res_2005, female_res_2010, female_res_2015, female_res_2020, sep = "_"),
             phase_1 = dist_name_new_2010 %in% c("banswara", "dungarpur", "jhalawar", "karauli", "sirohi", "udaipur"),
             phase_2 = dist_name_new_2010 %in% c("barmer", "chittorgarh", "jaisalmer", "jalore", "sawaimadhopur", "tonk")
      )
 
 write_parquet(elex_raj_05_20, sink = here("data/raj/elex_raj_05_20.parquet"))
+

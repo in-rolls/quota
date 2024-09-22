@@ -3,12 +3,12 @@
 ## Replication Materials
 
 * [Data](data/)
+	* SHRUG 2.0 can be downloaded from: https://www.devdatalab.org/shrug. 
+	* MNREGA data can be downloaded from: https://doi.org/10.7910/DVN/ZHF9WC
+	* UP Local Election data repository: https://github.com/in-rolls/local_elections_up
 * [Scripts](scripts/)
+	* Please get started with the [India Reservations.Rproj](India Reservations.Rproj) file. You can run the scripts in order.
 * [Outputs](tabs/)
-
-Please get started with the [India Reservations.Rproj](India Reservations.Rproj) file. You can run the script in order. 
-
-SHRUG 2.0 can be downloaded from: https://www.devdatalab.org/shrug. 
 
 ## Authors
 

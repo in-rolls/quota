@@ -55,6 +55,4 @@ mnrega_r1_wide <- mnrega_r1_long %>%
                  values_from = c(number_of_jobcards_applied_for:active_workers_women),
                  names_sep = "_")
 
-
-
 write_parquet(mnrega_r1_wide, here("data/mnrega/mnrega_r1.parquet"))
