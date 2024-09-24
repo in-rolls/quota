@@ -11,6 +11,9 @@ library(kableExtra)
 library(broom)
 library(stargazer)
 
+# Source utils
+source(here("scripts/00_utils.R"))
+
 # Load dat
 raj_elex_shrug <- read_parquet(here("data/raj/shrug_lgd_raj_elex_05_10.parquet"))
 ay   <- read_csv(here("data/shrug/shrug-antyodaya-csv/antyodaya_shrid.csv"))
@@ -63,23 +66,12 @@ models <- set_names(names(other_var), names(other_var)) %>%
 model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
-stargazer(models,
-          type = "latex", 
+custom_stargazer(models,
           title = "Effects of Reservations on Other Short- and Long-term Outcomes",
-          model.names = FALSE,
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(other_var)),
           add.lines = list(c("Covariates", rep("No", length(other_var)))),
-          omit.stat = c("rsq", "ser", "f"),
-          digits = 2,
-          font.size = "scriptsize",
-          dep.var.caption = "",
-          star.cutoffs = NULL,
-          report = "vcs",
-          single.row = FALSE,
-          notes.align = "l",
           label = "raj_shrug_other_05_10",
-          dep.var.labels.include = FALSE,
           notes = c("Number of female children (0-6 years);",
                     "Number of Households having BPL ration cards;",
                     "Number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana",

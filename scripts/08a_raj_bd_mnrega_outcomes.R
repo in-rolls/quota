@@ -9,6 +9,9 @@ library(broom)
 library(ggthemes)
 library(here)
 
+# Source utils
+source(here("scripts/00_utils.R"))
+
 # Load dat
 mnrega_elex_up_05_10 <- read_parquet(here("data/up/mnrega_elex_up_05_10.parquet"))
 
@@ -68,34 +71,23 @@ selected_model_names <- paste0(c("total_comp_project",
 # Filter clean_models to only include the specified models
 selected_models <- models[names(models) %in% selected_model_names]
 
-stargazer(selected_models,
-          type = "latex", 
+custom_stargazer(selected_models,
           title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014",
-          model.names = FALSE,
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
-          omit.stat = c("rsq", "ser", "f"),
-          single.row = FALSE,
-          digits = 2,
-          dep.var.labels.include = FALSE,
-          dep.var.caption = "",
-          no.space = TRUE,
-          star.cutoffs = NULL,
-          report = "vcs",
           notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
                     "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
                     "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
                     "Water Conservation: Number of projects to improve water conservation (2011--2014);",
                     "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
-          notes.align = "l",
           out = here("tabs/mnrega_up_05_10_main.tex"))
 
 # Bose and Das Districts
 
 # Apply the model fitting function across all specified column groups
 models <- set_names(mod_cols, mod_cols) %>% 
-     map(~ fit_model_for_group(.x, mnrega_elex_up_05_10[mnrega_elex_up_05_10$phase_1_bose == 1 | mnrega_elex_up_05_10$phase_2_bose == 1, ]))
+     map(~ fit_model_for_group(.x, mnrega_elex_up_05_10[mnrega_elex_up_05_10$phase_1_bose_2005 == 1 | mnrega_elex_up_05_10$phase_2_bose_2005 == 1, ]))
 
 # Tidy and Glance
 model_tidies <- map(models, tidy)
@@ -113,25 +105,14 @@ selected_model_names <- paste0(c("total_comp_project",
 # Filter clean_models to only include the specified models
 selected_models <- models[names(models) %in% selected_model_names]
 
-stargazer(selected_models,
-          type = "latex", 
+custom_stargazer(selected_models,
           title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014 (Bose and Das Districts)",
-          model.names = FALSE,
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
-          omit.stat = c("rsq", "ser", "f"),
-          single.row = FALSE,
-          digits = 2,
-          dep.var.labels.include = FALSE,
-          dep.var.caption = "",
-          no.space = TRUE,
-          star.cutoffs = NULL,
-          report = "vcs",
           notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
                     "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
                     "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
                     "Water Conservation: Number of projects to improve water conservation (2011--2014);",
                     "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
-          notes.align = "l",
           out = here("tabs/mnrega_up_05_10_main_bd_districts.tex"))

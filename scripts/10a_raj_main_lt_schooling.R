@@ -11,6 +11,9 @@ library(kableExtra)
 library(broom)
 library(stargazer)
 
+# Source utils
+source(here("scripts/00_utils.R"))
+
 # Load dat
 raj_elex_shrug <- read_parquet(here("data/raj/shrug_lgd_raj_elex_05_10.parquet"))
 ay <- read_csv(here("data/shrug/shrug-antyodaya-csv/antyodaya_shrid.csv"))
@@ -65,23 +68,12 @@ models <- set_names(names(school_var), names(school_var)) %>%
 model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
-stargazer(models,
-          type = "latex", 
+custom_stargazer(models,
           title = "Effects of Reservations on Long-term Outcomes Concerning Schooling",
-          model.names = FALSE,
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(school_var)),
           add.lines = list(c("Covariates", rep("No", length(school_var)))),
-          omit.stat = c("rsq", "ser", "f"),
-          digits = 2,
-          dep.var.caption = "",
-          star.cutoffs = NULL,
-          report = "vcs",
-          single.row = FALSE,
           label = "raj_shrug_schooling_05_10",
-          dep.var.labels.include = FALSE,
-          notes.align = "l",
-          font.size = "scriptsize",
           notes = c("Is there a primary school or not;",
                     "Is there is a middle school available;",
                     "The number of students enrolled in primary school per 1000 people;",

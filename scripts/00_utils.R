@@ -56,3 +56,31 @@ proportion_significant <- total_significant_pvalues / total_coefficients
 proportion_significant
 }
 
+## Custom Stargazer
+
+library(stargazer)
+
+# Custom stargazer function with common options
+custom_stargazer <- function(models, ...) {
+     stargazer(
+          models,
+          header = TRUE,
+          type = "latex", 
+          model.names = FALSE,
+          
+          omit.stat = c("rsq", "ser", "f"),
+          digits = 2,
+          
+          dep.var.caption = "",
+          dep.var.labels.include = FALSE,
+          
+          star.cutoffs = NULL,
+          report = "vcs",
+
+          no.space = TRUE,
+          single.row = FALSE,
+          notes.align = "l",
+          font.size = "scriptsize",
+          ...
+     )
+}
