@@ -1,14 +1,10 @@
 # Load libs
-library(here)
 library(arrow)
-library(readr)
-library(dplyr)
-library(tidyr)
-library(purrr)
-library(fixest)
-library(estimatr)
-library(kableExtra)
 library(broom)
+library(dplyr)
+library(here)
+library(purrr)
+library(readr)
 library(stargazer)
 
 # Source utils
@@ -24,10 +20,6 @@ raj_elex_ay <- raj_elex_shrug %>%
 ## Antyodya
 # Underweight, Truant, , Registered, SC/ST enrolled
 # interactions
-
-# SHRUG: Underweight Truant Immunized Registered SC/ST enrolled
-# SHRUG: Pri.School Mid.School Students School Meals
-# SHRUG: Pri.Health Comm.Health Maternal Health Anemic Pregnant Non-stunted child
 
 school_var <- list(
      "availability_of_primary_school" = "Primary School",
@@ -50,19 +42,8 @@ raj_elex_ay_total <- raj_elex_ay %>%
 
 # Model Names
 model_names <- paste0("lm_", names(school_var))
-
-fit_model_for_group <- function(column_name, data) {
-     sufficient_data <- complete.cases(data[[column_name]], data$female_res_2005, data$female_res_2010)
-     if (sum(sufficient_data) > 0) {
-          lm(as.formula(paste(column_name, "~ female_res_2005 + female_res_2010")), data = data)
-     } else {
-          NULL  # Indicate failure to fit the model due to insufficient data
-     }
-}
-
-# Apply the model fitting function across all specified column groups
 models <- set_names(names(school_var), names(school_var)) %>% 
-     map(~ fit_model_for_group(.x, raj_elex_ay_total))
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = raj_elex_ay_total))
 
 # Tidy and Glance
 model_tidies <- map(models, tidy)

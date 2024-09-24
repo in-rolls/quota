@@ -1,13 +1,11 @@
 # Load libs
-library(estimatr)
-library(stargazer)
-library(dplyr)
-library(readr)
-library(broom)
 library(arrow)
-library(ggthemes)
+library(broom)
+library(dplyr)
 library(here)
 library(purrr)
+library(readr)
+library(stargazer)
 
 # Source utils
 source(here("scripts/00_utils.R"))

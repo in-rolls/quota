@@ -1,14 +1,10 @@
 # Load libs
-library(here)
 library(arrow)
-library(readr)
-library(dplyr)
-library(tidyr)
-library(purrr)
-library(fixest)
-library(estimatr)
-library(kableExtra)
 library(broom)
+library(dplyr)
+library(here)
+library(purrr)
+library(readr)
 library(stargazer)
 
 # Source utils
@@ -63,7 +59,7 @@ fit_model_for_group <- function(column_name, data) {
 
 # Apply the model fitting function across all specified column groups
 models <- set_names(names(children_var), names(children_var)) %>% 
-     map(~ fit_model_for_group(.x, raj_elex_ay_total))
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = raj_elex_ay_total))
 
 # Tidy and Glance
 model_tidies <- map(models, tidy)
