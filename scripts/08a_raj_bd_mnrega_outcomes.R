@@ -1,13 +1,11 @@
 # Load libs
 library(arrow)
-library(purrr)
-library(estimatr)
-library(stargazer)
-library(dplyr)
-library(readr)
 library(broom)
-library(ggthemes)
+library(dplyr)
 library(here)
+library(purrr)
+library(readr)
+library(stargazer)
 
 # Source utils
 source(here("scripts/00_utils.R"))
@@ -41,19 +39,8 @@ mnrega_elex_up_05_10 <- mnrega_elex_up_05_10 %>%
 model_names <- paste0("lm_", column_groups)
 mod_cols <- paste0(column_groups, "_tot_11_14")
 
-# Function to fit 
-fit_model_for_group <- function(column_name, data) {
-     sufficient_data <- complete.cases(data[[column_name]], data$female_res_2005, data$female_res_2010)
-     if (sum(sufficient_data) > 0) {
-          lm(as.formula(paste(column_name, "~ female_res_2005 + female_res_2010")), data = data)
-     } else {
-          NULL  # Indicate failure to fit the model due to insufficient data
-     }
-}
-
-# Apply the model fitting function across all specified column groups
 models <- set_names(mod_cols, mod_cols) %>% 
-     map(~ fit_model_for_group(.x, mnrega_elex_up_05_10))
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = mnrega_elex_up_05_10))
 
 # Tidy and Glance
 model_tidies <- map(models, tidy)
@@ -84,10 +71,12 @@ custom_stargazer(selected_models,
           out = here("tabs/mnrega_up_05_10_main.tex"))
 
 # Bose and Das Districts
+raj_bd = mnrega_elex_up_05_10 %>%
+     filter(phase_1_bose_2005 == 1 | phase_2_bose_2005 == 1)
 
 # Apply the model fitting function across all specified column groups
 models <- set_names(mod_cols, mod_cols) %>% 
-     map(~ fit_model_for_group(.x, mnrega_elex_up_05_10[mnrega_elex_up_05_10$phase_1_bose_2005 == 1 | mnrega_elex_up_05_10$phase_2_bose_2005 == 1, ]))
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = raj_bd))
 
 # Tidy and Glance
 model_tidies <- map(models, tidy)
