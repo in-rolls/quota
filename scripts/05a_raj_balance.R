@@ -28,7 +28,6 @@ raj_elex_vd_01 <- raj_elex_shrug %>%
      inner_join(vd_01, by = "shrid2")
 
 # Notes
-# Could use: # pc01_vd_mcw_cntr: Number Of Maternity And Child Welfare Centres
 # Literacy and children < 6 are from the census abstract
 #"pc01_pca_p_06" = "Total children < 6 (Female)",
 #"pc01_pca_m_lit" = "Total literate (Male)",
@@ -42,13 +41,15 @@ balance_vars <- list(
      "pc01_vd_medi_fac" = "Number of medical facilities",
      "pc01_vd_m_home" = "Number of maternity homes",
      "pc01_vd_mcw_cntr" = "Number Of Family Welfare Centres",
+     "pc01_vd_p_sch" = "Number of Primary Schools",
+     "pc01_vd_m_sch" = "Number of Middle Schools",
      "pc01_vd_handpump" = "Handpumps",
      "pc01_vd_tap" = "Tap water",
      "pc01_vd_well" = "Wells",
      "pc01_vd_bank_fac" = "Banking facility",
      "pc01_vd_power_supl" = "Power supply",
-     "pc01_vd_app_mr" = "Approach - mud road",
-     "pc01_vd_app_pr" = "Approach - paved road"
+     "pc01_vd_app_mr" = "Approach - mud road"
+     #"pc01_vd_app_pr" = "Approach - paved road"
 )
 
 raj_elex_vd_01 <- raj_elex_vd_01 %>%
@@ -100,7 +101,7 @@ f_stats <- map_dbl(names(balance_vars), ~ calculate_ri_p_value(.x, raj_elex_vd_0
 
 balance_wide <- raj_elex_vd_01_gp %>%
      group_by(treat) %>%
-     summarise(across(all_of(names(balance_vars)), ~ round(mean(., na.rm = TRUE), 1)),
+     summarise(across(all_of(names(balance_vars)), ~ round(mean(., na.rm = TRUE), 2)),
                n = n())
 
 balance_long <- balance_wide %>%
@@ -118,6 +119,7 @@ df_diff <- full_model$edf - null_model$edf
 p_value <- 1 - pchisq(dev_diff, df_diff)
 
 bal_table <- balance_long %>%
+     mutate(across(where(is.numeric), ~ ifelse(Variable == "n", formatC(., format = "f", digits = 0), .))) %>%
      kable("latex", 
            booktabs = TRUE, 
            col.names = c("Variable", "T-T", "T-C", "C-T", "C-C", "p (F-stat.)"), 
@@ -127,11 +129,12 @@ bal_table <- balance_long %>%
      kable_styling(latex_options = c("hold_position", "scale_down")) %>%
      add_header_above(c(" " = 1, "Means by Group" = 4, " " = 1)) %>%
      row_spec(0, bold = TRUE) %>%
-     footnote(general = "Note: T denotes GPs that were reserved for women and C denotes other GPs. All the variables were taken from the 2001 Census Village Directory.
+     footnote(general = sprintf("T denotes GPs that were reserved for women and C denotes other GPs. All the variables were taken from the 2001 Census Village Directory.
             N indicates the number of Gram Panchayats. The p-value of the F-statistic is derived from regressions using randomized inference. 
             We also fit a null model and a multinomial model that used all the above variables to predict the type of transition, e.g., T-T, T-C, etc. 
-            The p-value of the Likelihood Ratio test is 0.72 which suggests that the complete multinomial model does not fit 
-              any better than a null model with no predictors.",
+            The p-value of the Likelihood Ratio test is %.2f which suggests that the complete multinomial model does not fit 
+              any better than a null model with no predictors.", p_value),
+              escape = FALSE,
             threeparttable = TRUE)
 
 save_kable(bal_table, file = here("tabs/balance_table_raj.tex"))
