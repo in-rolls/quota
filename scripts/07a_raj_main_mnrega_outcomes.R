@@ -58,6 +58,11 @@ mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
 model_names <- paste0("lm_", column_groups)
 mod_cols <- paste0(column_groups, "_tot_11_14")
 
+# Just a dist/sam fe model to see how much variance it explains
+dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
+
+# Actual 
 main_models <- set_names(mod_cols, mod_cols) %>% 
      map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = mnrega_elex_raj_05_10))
 
