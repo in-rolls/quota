@@ -18,6 +18,7 @@ mnrega_r3 <- read_parquet(here("data/mnrega/mnrega_r3.parquet"))
 mnrega_r5 <- read_parquet(here("data/mnrega/mnrega_r5.parquet"))
 mnrega_r6 <- read_parquet(here("data/mnrega/mnrega_r6.parquet"))
 elex_up_05_10 <- read_parquet(here("data/up/up_05_10_fuzzy.parquet"))
+elex_up_05_21 <- read_parquet(here("data/up/up_all_fuzzy.parquet"))
 
 # Join MNREGA Reports
 mnrega_up_dupes <- mnrega_r6 %>%
@@ -36,7 +37,15 @@ mnrega_up <- mnrega_up %>%
      )
 
 elex_up_05_10 <- elex_up_05_10 %>%
-     mutate(match_name = gsub(" ", "", normalize_string(paste(district_name_eng_2010, block_name_eng_2010, gp_name_eng_2010)))
+     mutate(match_name = gsub(" ", "", normalize_string(paste(district_name_eng_2010, 
+                                                              block_name_eng_2010, 
+                                                              gp_name_eng_2010)))
+     )
+
+elex_up_05_21 <- elex_up_05_21 %>%
+     mutate(match_name = gsub(" ", "", normalize_string(paste(district_name_eng_2010, 
+                                                              block_name_eng_2010, 
+                                                              gp_name_eng_2010)))
      )
 
 # Process each row
@@ -65,6 +74,10 @@ mnrega_elex_up_05_10 <- elex_up_05_10 %>%
      split(seq(nrow(.))) %>%
      map_dfr(~ process_row(.x, mnrega_up))
 
+mnrega_elex_up_05_21 <- elex_up_05_21 %>%
+     split(seq(nrow(.))) %>%
+     map_dfr(~ process_row(.x, mnrega_up))
+
 # Remove duplicates and filter down to where  dist_mnrega_match < .1
 mnrega_elex_up_05_10_dedupe <- mnrega_elex_up_05_10 %>%
      filter(dist_mnrega_match < 0.1) %>%
@@ -75,4 +88,14 @@ mnrega_elex_up_05_10_dedupe <- mnrega_elex_up_05_10 %>%
      filter(n() == 1) %>%
      ungroup()
 
+mnrega_elex_up_05_21_dedupe <- mnrega_elex_up_05_21 %>%
+     filter(dist_mnrega_match < 0.1) %>%
+     group_by(match_name.x) %>%
+     filter(n() == 1) %>%
+     ungroup() %>%
+     group_by(match_name.y) %>%
+     filter(n() == 1) %>%
+     ungroup()
+
 write_parquet(mnrega_elex_up_05_10_dedupe, sink = here("data/up/mnrega_elex_up_05_10.parquet"))
+write_parquet(mnrega_elex_up_05_21_dedupe, sink = here("data/up/mnrega_elex_up_05_21.parquet"))

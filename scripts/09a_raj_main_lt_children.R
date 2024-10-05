@@ -18,19 +18,12 @@ raj_elex_ay <- raj_elex_shrug %>%
      inner_join(ay, by = "shrid2")
 
 ## Antyodya
-# Underweight, Truant, , Registered, SC/ST enrolled
-# interactions
-
-# SHRUG: Underweight Truant Immunized Registered SC/ST enrolled
-# SHRUG: Pri.School Mid.School Students School Meals
-# SHRUG: Pri.Health Comm.Health Maternal Health Anemic Pregnant Non-stunted child
-
 children_var <- list(
      "total_childs_aged_0_to_3_years_i" = "Immunized",
      "total_underweight_child_age_unde" = "Underweight",
      "no_of_children_not_attending_sch" = "Truant",
-     "total_childs_aged_0_to_3_years_r" = "Registered",
-     "total_minority_children_getting_" = "SC/ST enrolled"
+     "total_childs_aged_0_to_3_years_r" = "Anganwadi",
+     "total_minority_children_getting_" = "SC/ST"
 )
 
 # Let's create a GP Level dataset
@@ -71,9 +64,9 @@ custom_stargazer(models,
           column.labels = unlist(unname(children_var)),
           add.lines = list(c("Covariates", rep("No", length(children_var)))),
           label = "raj_shrug_children_05_10",
-          notes = c("The number of children under the age of 6 years who are underweight per hundred total children;",
-                    "Number of children not attending school per hundred total children;",
-                    "Number of children aged 0-3 years immunized per hundred total children;",
-                    "Number of children aged 0-6 years registered in Aanganwadis per hundred total children;",
-                    "Number of SC/ST/OBC/minoritychildren attending school."),
+          notes = c("Immunized: Percent of 0--3 year old children who are immunized.",
+                    "Underweight: Percent underweight children under 6.",
+                    "Truant: Percent children not attending school.",
+                    "Anganwadi: Percent of children under 6 registered in Aanganwadis.",
+                    "SC/ST: Number of SC/ST/OBC/minority children getting scholarship."),
           out = here("tabs/shrug_raj_05_10_children.tex"))
