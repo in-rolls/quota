@@ -59,8 +59,8 @@ model_names <- paste0("lm_", column_groups)
 mod_cols <- paste0(column_groups, "_tot_11_14")
 
 # Just a dist/sam fe model to see how much variance it explains
-dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
-     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
+#dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
+#     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
 
 # Actual 
 main_models <- set_names(mod_cols, mod_cols) %>% 
@@ -284,7 +284,6 @@ custom_stargazer(n_comp_all_models,
 mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
      mutate(female_res_sum = rowSums(select(., female_res_2005, female_res_2010, female_res_2015, female_res_2020)),
             female_res_sum_factor = factor(female_res_sum, levels = 0:max(female_res_sum)))
-
 # Model Names
 model_names <- paste0("lm_", column_groups)
 mod_cols <- paste0(column_groups, "_tot_11_23")
@@ -310,3 +309,26 @@ custom_stargazer(n_comp_dosage_models,
                     "Water Conservation: Number of projects to improve water conservation (2011--2023);",
                     "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
           out = here("tabs/mnrega_raj_05_20_main_dosage.tex"))
+
+# Regular additive across years
+add_models <- set_names(mod_cols, mod_cols)  %>% 
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010 + female_res_2015 + female_res_2020")), data = mnrega_elex_raj_05_20))
+
+# Tidy and Glance
+map(add_models, tidy)
+map(add_models, glance)
+
+n_comp_add_models <- add_models[names(add_models) %in% n_comp_proj_11_23]
+
+custom_stargazer(n_comp_add_models,
+                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+                 covariate.labels = c("2005", "2010", "2015", "2020", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 add.lines = list(c("Covariates", rep("No", 5))),
+                 label = "main_mnrega_2011_2023_dosage",
+                 notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
+                           "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
+                           "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
+                           "Water Conservation: Number of projects to improve water conservation (2011--2023);",
+                           "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+                 out = here("tabs/mnrega_raj_05_20_main_additive.tex"))
