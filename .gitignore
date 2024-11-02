@@ -7,3 +7,5 @@ data/rajasthan/background/pdfs/91-Municipal General Election Book-2021.pdf
 data/census/*
 data/mnrega/2023-csv/*
 .RData
+.Rapp.history
+

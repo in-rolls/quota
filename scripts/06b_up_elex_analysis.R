@@ -18,6 +18,22 @@ up_all <- read_parquet("data/up/up_all_inner.parquet")
 up_05_10_ff <- read_parquet("data/up/up_05_10_fuzzy.parquet")
 up_10_15_ff <- read_parquet("data/up/up_10_15_fuzzy.parquet")
 
+# District
+
+up_dist_wise_transition <- up %>%
+     group_by(district_name_eng_2010) %>%
+     summarise(
+          prop_1 = mean(female_res_2005 == 1),
+          prop_11 = mean(female_res_2005 == 1 & female_res_2010 == 1),
+          prop_01 = mean(female_res_2005 == 0 & female_res_2010 == 1),
+          prop_10 = mean(female_res_2005 == 1 & female_res_2010 == 0),
+          prop_00 = mean(female_res_2005 == 0 & female_res_2010 == 0),
+          size = n()
+     ) %>%
+     arrange(desc(prop_10))
+print(up_dist_wise_transition, n = 100)
+write_csv(up_dist_wise_transition, file = here("data/up/up_dist_wise_05_10transition.csv"))
+
 # Random or not
 #------------------
 with(up_05_10,    summary(lm(female_res_2010 ~ female_res_2005)))
