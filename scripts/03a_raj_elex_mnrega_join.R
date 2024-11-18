@@ -13,6 +13,10 @@ library(fuzzyjoin)
 source(here("scripts/00_utils.R"))
 
 # Let's load elex data
+mnrega_elex_raj_10 <- read_csv(here("data/raj/sarpanch_2010.csv"))
+mnrega_elex_raj_15 <- read_csv(here("data/raj/sarpanch_2015.csv"))
+mnrega_elex_raj_20 <- read_csv(here("data/raj/sarpanch_2020_clean.csv"))
+
 elex_raj_05_10 <- read_parquet(here("data/raj/elex_raj_05_10.parquet"))
 elex_raj_05_20 <- read_parquet(here("data/raj/elex_raj_05_20.parquet"))
 
