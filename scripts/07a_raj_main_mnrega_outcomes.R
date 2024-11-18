@@ -10,7 +10,9 @@ library(stargazer)
 # Source utils
 source(here("scripts/00_utils.R"))
 
-# Load dat
+# Year wise (2005, 2010, 2015, 2020) --- plausible future
+
+# Two Big Files
 mnrega_elex_raj_05_10 <- read_parquet(here("data/raj/mnrega_elex_raj_05_10.parquet"))
 mnrega_elex_raj_05_20 <- read_parquet(here("data/raj/mnrega_elex_raj_05_20.parquet"))
 
@@ -25,11 +27,19 @@ column_groups <- as.vector(outer(bases, components, paste, sep = "_"))
 
 mnrega_elex_raj_05_10 <- mnrega_elex_raj_05_10 %>%
      mutate(
+          # Create columns for the 2011 to 2014 range
           map_dfc(set_names(column_groups, paste0(column_groups, "_tot_11_14")), 
                   ~ {
-                       col_pattern <- paste0(.x, "_201[1-4]$")
-                       new_col <- rowSums(select(mnrega_elex_raj_05_10, matches(col_pattern)), na.rm = TRUE)
-                       return(new_col)
+                       col_pattern_11_14 <- paste0(.x, "_201[1-4]$")
+                       new_col_11_14 <- rowSums(select(mnrega_elex_raj_05_10, matches(col_pattern_11_14)), na.rm = TRUE)
+                       return(new_col_11_14)
+                  }),
+          
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_11_13")), 
+                  ~ {
+                       col_pattern_11_13 <- paste0(.x, "_201[1-3]$")
+                       new_col_11_13 <- rowSums(select(mnrega_elex_raj_05_10, matches(col_pattern_11_13)), na.rm = TRUE)
+                       return(new_col_11_13)
                   })
      )
 
@@ -50,6 +60,27 @@ mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
                        col_pattern <- paste0(.x, "_20(1[1-9]|2[0-3])$")
                        new_col <- rowSums(select(mnrega_elex_raj_05_20, matches(col_pattern)), na.rm = TRUE)
                        return(new_col)
+                  }),
+          
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_11_13")), 
+                  ~ {
+                       col_pattern_11_13 <- paste0(.x, "_201[1-3]$")
+                       new_col_11_13 <- rowSums(select(mnrega_elex_raj_05_20, matches(col_pattern_11_13)), na.rm = TRUE)
+                       return(new_col_11_13)
+                  }),
+          
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_16_18")), 
+                  ~ {
+                       col_pattern_16_18 <- paste0(.x, "_201[6-8]$")
+                       new_col_16_18 <- rowSums(select(mnrega_elex_raj_05_20, matches(col_pattern_16_18)), na.rm = TRUE)
+                       return(new_col_16_18)
+                  }),
+          
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_21_23")), 
+                  ~ {
+                       col_pattern_21_23 <- paste0(.x, "_202[1-3]$")
+                       new_col_21_23 <- rowSums(select(mnrega_elex_raj_05_20, matches(col_pattern_21_23)), na.rm = TRUE)
+                       return(new_col_21_23)
                   })
      )
 
@@ -332,3 +363,120 @@ custom_stargazer(n_comp_add_models,
                            "Water Conservation: Number of projects to improve water conservation (2011--2023);",
                            "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
                  out = here("tabs/mnrega_raj_05_20_main_additive.tex"))
+
+# Let's do by year
+# -----------
+
+model_names <- paste0("lm_", column_groups)
+mod_cols <- paste0(column_groups, "_tot_11_13")
+
+# Just a dist/sam fe model to see how much variance it explains
+#dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
+#     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
+
+# Actual 
+main_models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ lm(as.formula(paste(.x, "~ female_res_2010")), data = mnrega_elex_raj_05_20))
+
+# Print
+map(main_models, ~ tidy(.x) %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
+map(main_models, glance)
+proportion_significant_pvalues(main_models)
+
+# Number of completed projects
+n_comp_proj <- paste0(
+     c("total", "connectivity", "childcare", "sanitation", "water_conserve", "water_trad"), 
+     "_comp_project_tot_11_13"
+)
+
+n_comp_main_models <- main_models[names(main_models) %in% n_comp_proj]
+
+custom_stargazer(n_comp_main_models,
+                 title = "Effects of 2010 Reservations on the Number of Completed MNREGA Projects, 2011-2013",
+                 covariate.labels = c("2010", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 add.lines = list(c("Covariates", rep("No", 5))),
+                 label = "main_mnrega_10",
+                 notes = c("All - Total completed or ongoing MNREGA projects (2011--2013);", 
+                           "Rural Roads: Number of projects to improve connectivity and roads (2011--2013);",
+                           "Sanitation:  Number of projects to improve sanitation facilities  (2011--2013);",
+                           "Water Conservation: Number of projects to improve water conservation (2011--2013);",
+                           "Trad. Water: Number of projects to maintain traditional water bodies (2011--2013)."),
+                 out = here("tabs/mnrega_raj_10_main.tex"))
+
+# 2015
+model_names <- paste0("lm_", column_groups)
+mod_cols <- paste0(column_groups, "_tot_16_18")
+
+# Just a dist/sam fe model to see how much variance it explains
+#dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
+#     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
+
+# Actual 
+main_models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ lm(as.formula(paste(.x, "~ female_res_2015")), data = mnrega_elex_raj_05_20))
+
+# Print
+map(main_models, ~ tidy(.x) %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
+map(main_models, glance)
+proportion_significant_pvalues(main_models)
+
+# Number of completed projects
+n_comp_proj <- paste0(
+     c("total", "connectivity", "childcare", "sanitation", "water_conserve", "water_trad"), 
+     "_comp_project_tot_16_18"
+)
+
+n_comp_main_models <- main_models[names(main_models) %in% n_comp_proj]
+
+custom_stargazer(n_comp_main_models,
+                 title = "Effects of 2015 Reservations on the Number of Completed MNREGA Projects, 2016-2018",
+                 covariate.labels = c("2015", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 add.lines = list(c("Covariates", rep("No", 5))),
+                 label = "main_mnrega_15",
+                 notes = c("All - Total completed or ongoing MNREGA projects (2016--2018);", 
+                           "Rural Roads: Number of projects to improve connectivity and roads (2016--2018);",
+                           "Sanitation:  Number of projects to improve sanitation facilities  (2016--2018);",
+                           "Water Conservation: Number of projects to improve water conservation (2016--2018);",
+                           "Trad. Water: Number of projects to maintain traditional water bodies (2016--2018)."),
+                 out = here("tabs/mnrega_raj_15_main.tex"))
+
+
+# 2021
+model_names <- paste0("lm_", column_groups)
+mod_cols <- paste0(column_groups, "_tot_21_23")
+
+# Just a dist/sam fe model to see how much variance it explains
+#dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
+#     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
+
+# Actual 
+main_models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ lm(as.formula(paste(.x, "~ female_res_2020")), data = mnrega_elex_raj_05_20))
+
+# Print
+map(main_models, ~ tidy(.x) %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
+map(main_models, glance)
+proportion_significant_pvalues(main_models)
+
+# Number of completed projects
+n_comp_proj <- paste0(
+     c("total", "connectivity", "childcare", "sanitation", "water_conserve", "water_trad"), 
+     "_comp_project_tot_21_23"
+)
+
+n_comp_main_models <- main_models[names(main_models) %in% n_comp_proj]
+
+custom_stargazer(n_comp_main_models,
+                 title = "Effects of 2020 Reservations on the Number of Completed MNREGA Projects, 2021-2023",
+                 covariate.labels = c("2020", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 add.lines = list(c("Covariates", rep("No", 5))),
+                 label = "main_mnrega_20",
+                 notes = c("All - Total completed or ongoing MNREGA projects (2021--2023);", 
+                           "Rural Roads: Number of projects to improve connectivity and roads (2021--2023);",
+                           "Sanitation:  Number of projects to improve sanitation facilities  (2021--2023);",
+                           "Water Conservation: Number of projects to improve water conservation (2021--2023);",
+                           "Trad. Water: Number of projects to maintain traditional water bodies (2021--2023)."),
+                 out = here("tabs/mnrega_raj_20_main.tex"))
