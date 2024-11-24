@@ -14,9 +14,9 @@ source(here("scripts/00_utils.R"))
 
 # Filter, add year, clean names, 
 process_r3_files <- function(file_path) {
-     # if you want all: .*/r3-all-(\\d{4})\\.csv\\.gz 
-     year <- as.numeric(sub(".*/r3-all-(201[3-9]|202[0-4])\\.csv\\.gz", "\\1", file_path))
-     
+     #year <- as.numeric(sub(".*/r3-all-(201[3-9]|202[0-4])\\.csv\\.gz", "\\1", file_path))
+     year <- as.numeric(sub(".*/r3-all-(\\d{4})\\.csv\\.gz", "\\1", file_path))
+
      df <- read_csv(here(file_path)) %>%
           filter(state %in% c("UTTAR PRADESH", "RAJASTHAN")) %>%
           clean_names()
