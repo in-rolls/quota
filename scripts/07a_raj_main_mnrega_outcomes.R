@@ -11,6 +11,9 @@ library(stargazer)
 source(here("scripts/00_utils.R"))
 
 # Year wise (2005, 2010, 2015, 2020) --- plausible future
+mnrega_elex_raj_10_strict <- read_parquet(here("data/raj/mnrega_elex_raj_10_strict.parquet"))
+mnrega_elex_raj_15_strict <- read_parquet(here("data/raj/mnrega_elex_raj_15_strict.parquet"))
+mnrega_elex_raj_20_strict <- read_parquet(here("data/raj/mnrega_elex_raj_20_strict.parquet"))
 
 # Two Big Files
 mnrega_elex_raj_05_10 <- read_parquet(here("data/raj/mnrega_elex_raj_05_10.parquet"))
@@ -83,6 +86,37 @@ mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
                        return(new_col_21_23)
                   })
      )
+
+# Year wise
+mnrega_elex_raj_10_strict <- mnrega_elex_raj_10_strict  %>%
+     mutate(
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_11_13")), 
+                  ~ {
+                       col_pattern_11_13 <- paste0(.x, "_201[1-3]$")
+                       new_col_11_13 <- rowSums(select(mnrega_elex_raj_10_strict, matches(col_pattern_11_13)), na.rm = TRUE)
+                       return(new_col_11_13)
+                  })
+          )
+
+mnrega_elex_raj_15_strict <- mnrega_elex_raj_15_strict  %>%
+     mutate(
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_16_18")), 
+                  ~ {
+                       col_pattern_16_18 <- paste0(.x, "_201[6-8]$")
+                       new_col_16_18 <- rowSums(select(mnrega_elex_raj_15_strict, matches(col_pattern_16_18)), na.rm = TRUE)
+                       return(new_col_16_18)
+                  })
+          )
+
+mnrega_elex_raj_20_strict <- mnrega_elex_raj_20_strict  %>%
+     mutate(
+          map_dfc(set_names(column_groups, paste0(column_groups, "_tot_21_23")), 
+                  ~ {
+                       col_pattern_21_23 <- paste0(.x, "_202[1-3]$")
+                       new_col_21_23 <- rowSums(select(mnrega_elex_raj_20_strict, matches(col_pattern_21_23)), na.rm = TRUE)
+                       return(new_col_21_23)
+                  })
+          )
 
 # Main
 # Model Names
