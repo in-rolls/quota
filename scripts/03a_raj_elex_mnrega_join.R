@@ -13,9 +13,9 @@ library(fuzzyjoin)
 source(here("scripts/00_utils.R"))
 
 # Let's load elex data
-mnrega_elex_raj_10 <- read_csv(here("data/raj/sarpanch_2010.csv"))
-mnrega_elex_raj_15 <- read_csv(here("data/raj/sarpanch_2015.csv"))
-mnrega_elex_raj_20 <- read_csv(here("data/raj/sarpanch_2020_clean.csv"))
+elex_raj_10 <- read_csv(here("data/raj/sarpanch_2010.csv"))
+elex_raj_15 <- read_csv(here("data/raj/sarpanch_2015.csv"))
+elex_raj_20 <- read_csv(here("data/raj/sarpanch_2020_clean.csv"))
 
 elex_raj_05_10 <- read_parquet(here("data/raj/elex_raj_05_10.parquet"))
 elex_raj_05_20 <- read_parquet(here("data/raj/elex_raj_05_20.parquet"))
@@ -25,17 +25,44 @@ elex_raj_05_20 <- read_parquet(here("data/raj/elex_raj_05_20.parquet"))
 # Caveat = a bunch of PS are simply missing from the elex. data
 # Options = 1-many match or this may reflect Gehlot's 2023 announcement of 19 new districts
 elex_mnrega_ps_block <- read_csv(here("data/raj/elex_mnrega_ps_block_crosswalk.csv"))
+
+# Year wise
+elex_raj_10_r <- elex_raj_10 %>%
+     mutate(samiti_name_new = tolower(samiti_name_new)) %>%
+     left_join(elex_mnrega_ps_block, by = c("samiti_name_new" = "elex_samiti_name")) %>%
+     mutate(match_name = normalize_string(gsub(" ", "", paste0(dist_name_new, mnrega_block_name, gp_new)))) %>%
+     filter(!is.na(mnrega_block_name)) %>%
+     filter(!match_name %in% match_name[duplicated(match_name)])
+
+
+elex_raj_15_r <- elex_raj_15 %>%
+     mutate(samiti_name_new = tolower(samiti_name_new)) %>%
+     left_join(elex_mnrega_ps_block, by = c("samiti_name_new" = "elex_samiti_name")) %>%
+     mutate(match_name = normalize_string(gsub(" ", "", paste0(dist_name_new, mnrega_block_name, gp_new)))) %>%
+     filter(!is.na(mnrega_block_name)) %>%
+     filter(!match_name %in% match_name[duplicated(match_name)])
+
+elex_raj_20_r <- elex_raj_20 %>%
+     mutate(samiti_name_new = tolower(PanchayatSamiti)) %>%
+     left_join(elex_mnrega_ps_block, by = c("samiti_name_new" = "elex_samiti_name")) %>%
+     mutate(match_name = normalize_string(gsub(" ", "", paste0(District, mnrega_block_name, NameOfGramPanchyat)))) %>%
+     filter(!is.na(mnrega_block_name)) %>%
+     filter(!match_name %in% match_name[duplicated(match_name)])
+
+# Multi-year
 elex_raj_05_10_r <- elex_raj_05_10 %>%
      mutate(samiti_name_new_2010 = tolower(samiti_name_new_2010)) %>%
      left_join(elex_mnrega_ps_block, by = c("samiti_name_new_2010" = "elex_samiti_name")) %>%
-     mutate(match_name = gsub(" ", "", paste0(dist_name_new_2010, mnrega_block_name, gp_new_2010))) %>%
-     filter(!is.na(mnrega_block_name))
+     mutate(match_name = normalize_string(gsub(" ", "", paste0(dist_name_new_2010, mnrega_block_name, gp_new_2010)))) %>%
+     filter(!is.na(mnrega_block_name)) %>%
+     filter(!match_name %in% match_name[duplicated(match_name)])
 
 elex_raj_05_20_r <- elex_raj_05_20 %>%
      mutate(samiti_name_new_2010 = tolower(samiti_name_new_2010)) %>%
      left_join(elex_mnrega_ps_block, by = c("samiti_name_new_2010" = "elex_samiti_name")) %>%
-     mutate(match_name = gsub(" ", "", paste0(dist_name_new_2010, mnrega_block_name, gp_new_2010))) %>%
-     filter(!is.na(mnrega_block_name))
+     mutate(match_name = normalize_string(gsub(" ", "", paste0(dist_name_new_2010, mnrega_block_name, gp_new_2010)))) %>%
+     filter(!is.na(mnrega_block_name)) %>%
+     filter(!match_name %in% match_name[duplicated(match_name)])
 
 # Load dat
 mnrega_r1 <- read_parquet(here("data/mnrega/mnrega_r1.parquet"))
@@ -78,9 +105,19 @@ mnrega_raj <- mnrega_raj %>%
             ),
      district = tolower(district),
      match_name =  gsub(" ", "", normalize_string(paste0(district, block, ascii_panchayat)))
-     )
+     ) %>%
+     filter(!match_name %in% match_name[duplicated(match_name)])
 
 # Strict joins
+mnrega_elex_raj_10_strict <- elex_raj_10_r %>%
+     inner_join(mnrega_raj, by = "match_name")
+
+mnrega_elex_raj_15_strict <- elex_raj_15_r %>%
+     inner_join(mnrega_raj, by = "match_name")
+
+mnrega_elex_raj_20_strict <- elex_raj_20_r %>%
+     inner_join(mnrega_raj, by = "match_name")
+
 mnrega_elex_raj_05_10_strict <- elex_raj_05_10_r %>%
      inner_join(mnrega_raj, by = "match_name")
 
@@ -136,6 +173,10 @@ mnrega_elex_raj_05_20_dedupe <- mnrega_elex_raj_05_20 %>%
      group_by(match_name.y) %>%
      filter(n() == 1) %>%
      ungroup()
+
+write_parquet(mnrega_elex_raj_10_strict, sink = here("data/raj/mnrega_elex_raj_10_strict.parquet"))
+write_parquet(mnrega_elex_raj_15_strict, sink = here("data/raj/mnrega_elex_raj_15_strict.parquet"))
+write_parquet(mnrega_elex_raj_20_strict, sink = here("data/raj/mnrega_elex_raj_20_strict.parquet"))
 
 write_parquet(mnrega_elex_raj_05_10_strict, sink = here("data/raj/mnrega_elex_raj_05_10_strict.parquet"))
 write_parquet(mnrega_elex_raj_05_20_strict, sink = here("data/raj/mnrega_elex_raj_05_20_strict.parquet"))
