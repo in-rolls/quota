@@ -9,3 +9,4 @@ data/mnrega/2023-csv/*
 .RData
 .Rapp.history
 
+.here
