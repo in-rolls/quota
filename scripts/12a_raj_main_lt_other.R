@@ -19,6 +19,9 @@ raj_elex_ay <- raj_elex_shrug %>%
      inner_join(ay, by = "shrid2") %>%
      inner_join(secc, by = "shrid2")
 
+# s.e. and beta are weird--- we don't see any sig. effects but for now don't feel comfortable adding these
+# #"two_crop_acre_sum" = "Irrigation" #"Irrigation: Total land with assured irrigation for two crops" 
+
 # interactions
 
 other_var <- list(
@@ -26,8 +29,7 @@ other_var <- list(
      "total_hhd_having_bpl_cards" = "BPL Cards",
      "total_no_of_eligible_beneficiari" = "Maternity Benefit",
      "wall_mat_solid_share" = "Solid Wall",
-     "roof_mat_solid_share" = "Solid Roof",
-     "two_crop_acre_sum" = "Irrigation"
+     "roof_mat_solid_share" = "Solid Roof"
      )
 
 # Let's create a GP Level dataset
@@ -57,10 +59,10 @@ custom_stargazer(models,
           column.labels = unlist(unname(other_var)),
           add.lines = list(c("Covariates", rep("No", length(other_var)))),
           label = "raj_shrug_other_05_10",
-          notes = c("Number of female children (0-6 years);",
-                    "Number of Households having BPL ration cards;",
-                    "Number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana",
-                    "Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;",
-                    "Share of households with solid roof - stone/slate sheets/concrete burned brick;",
-                    "Total land with assured irrigation for two crops"),
+          notes = c("The outcomes are from the Mission Antyodya Survey from 2019.",
+                    "Female Children: Number of female children (0-6 years);",
+                    "BPL Cards: Number of Households having BPL ration cards;",
+                    "Maternity Benefit: Number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana",
+                    "Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;",
+                    "Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick;"),
           out = "tabs/shrug_raj_05_10_other.tex")

@@ -70,7 +70,7 @@ custom_stargazer <- function(models, ...) {
           
           omit.stat = c("rsq", "ser", "f"),
           digits = 2,
-          column.sep.width = "1pt",
+          column.sep.width = "0pt",
           
           dep.var.caption = "",
           dep.var.labels.include = FALSE,
