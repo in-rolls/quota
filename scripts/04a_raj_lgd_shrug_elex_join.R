@@ -52,8 +52,6 @@ lgd_up <- read_csv(here("data/lgd/up_village_gp_mapping_2024.csv")) %>%
 
 lgd <- bind_rows(lgd_raj, lgd_up)
 
-
-
 # VD, PCA
 sh_pca_01 <- read_csv(here("data/shrug/shrug-pca01-csv/pc01_pca_clean_shrid.csv"))
 sh_pca_01 <- sh_pca_01 %>%
