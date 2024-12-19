@@ -178,6 +178,26 @@ custom_stargazer(n_ongoing_models,
                     "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
           out = here("tabs/mnrega_raj_05_10_main_ongoing.tex"))
 
+## Expenditure
+comp_expenditure <- paste0(
+     c("total", "connectivity", "childcare", "sanitation", "water_conserve", "water_trad"), 
+     "_comp_expenditure_tot_11_14"
+)
+
+comp_expenditure_models <- main_models[names(main_models) %in% comp_expenditure]
+
+custom_stargazer(n_ongoing_models,
+                 title = "Effects of Reservations on the Expenditure on Completed MNREGA Projects, 2011-2014",
+                 covariate.labels = c("2005", "2010", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 add.lines = list(c("Covariates", rep("No", 5))),
+                 label = "main_mnrega_expenditure",
+                 notes = c("All - Expenditure on allMNREGA projects (2011--2014);", 
+                           "Rural Roads: Expenditure on projects to improve connectivity and roads (2011--2014);",
+                           "Sanitation:  Expenditure on projects to improve sanitation facilities  (2011--2014);",
+                           "Water Conservation: Expenditure on projects to improve water conservation (2011--2014);",
+                           "Trad. Water: Expenditure on projects to maintain traditional water bodies (2011--2014)."),
+                 out = here("tabs/mnrega_raj_05_10_main_comp_expenditure.tex"))
 ## Interaction
 int_models <- set_names(mod_cols, mod_cols)  %>% 
      map(~ lm(as.formula(paste(.x, "~ female_res_2005*female_res_2010")), data = mnrega_elex_raj_05_10))

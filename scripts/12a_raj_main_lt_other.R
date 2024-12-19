@@ -66,3 +66,39 @@ custom_stargazer(models,
                     "Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;",
                     "Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick;"),
           out = "tabs/shrug_raj_05_10_other.tex")
+
+# Define column labels for the models
+column_labels <- unlist(unname(other_var))
+
+# Create a custom row with the correct number of columns
+custom_row <- data.frame(
+     "Covariates",  # Use "Covariates" as the first column
+     as.list(rep("No", length(column_labels))),  # "No" values for each column
+     stringsAsFactors = FALSE
+)
+
+# Assign column names: first for row label, followed by model column labels
+colnames(custom_row) <- c("Row Label", column_labels)
+
+# Generate the table
+modelsummary(
+     models,
+     title = "Effects of Reservations on Other Short- and Long-term Outcomes",
+     coef_map = c("2005" = "2005", "2010" = "2010", "(Intercept)" = "Constant"), # Map coefficient names
+     stars = TRUE,  # Add significance stars
+     gof_omit = ".*",  # Omit goodness-of-fit statistics
+     add_rows = custom_row,  # Add the custom row for covariates
+     output = "tabs/shrug_raj_05_10_other.tex",
+     notes = c(
+          "The outcomes are from the Mission Antyodya Survey from 2019.",
+          "Female Children: Number of female children (0-6 years);",
+          "BPL Cards: Number of Households having BPL ration cards;",
+          "Maternity Benefit: Number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana;",
+          "Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;",
+          "Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick."
+     ),
+     escape = FALSE # Allow LaTeX formatting
+)
+
+     
+)
