@@ -54,7 +54,7 @@ model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
 custom_stargazer(models,
-          title = "Effects of Reservations on Other Short- and Long-term Outcomes (UP)",
+          title = "Effects of Reservations on Other Short- and Long-term Outcomes",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(other_var)),
           add.lines = list(c("Covariates", rep("No", length(other_var)))),
@@ -67,16 +67,3 @@ custom_stargazer(models,
                      (iv) Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;
                      (v) Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick.",
           out = "tabs/shrug_raj_05_10_other.tex")
-
-# Define column labels for the models
-column_labels <- unlist(unname(other_var))
-
-# Create a custom row with the correct number of columns
-custom_row <- data.frame(
-     "Covariates",  # Use "Covariates" as the first column
-     as.list(rep("No", length(column_labels))),  # "No" values for each column
-     stringsAsFactors = FALSE
-)
-
-# Assign column names: first for row label, followed by model column labels
-colnames(custom_row) <- c("Row Label", column_labels)
