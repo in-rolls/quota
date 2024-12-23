@@ -59,7 +59,7 @@ up_elex_vd_01 <- up_elex_vd_01 %>%
                            `0-1` = "NF-F",
                            `1-0` = "F-NF",
                            `1-1` = "F-F"),
-            cluster_id = paste(dist_name_new_2005, samiti_name_new_2005, gp_new_2005, sep = "-"))  
+            cluster_id = paste(district_name_eng_2005, block_name_eng_2005, gp_name_eng_2005, sep = "-"))  
 
 # GP Level
 up_elex_vd_01_gp <- up_elex_vd_01 %>%
@@ -102,7 +102,7 @@ f_stats <- map_dbl(names(balance_vars), ~ calculate_ri_p_value(.x, up_elex_vd_01
 balance_wide <- up_elex_vd_01_gp %>%
      group_by(treat) %>%
      summarise(across(all_of(names(balance_vars)), ~ round(mean(., na.rm = TRUE), 2)),
-               n = n())
+               N = n())
 
 balance_long <- balance_wide %>%
      pivot_longer(cols = -treat, names_to = "Variable", values_to = "Value") %>%
@@ -119,21 +119,22 @@ df_diff <- full_model$edf - null_model$edf
 p_value <- 1 - pchisq(dev_diff, df_diff)
 
 bal_table <- balance_long %>%
-     mutate(across(where(is.numeric), ~ ifelse(Variable == "n", formatC(., format = "f", digits = 0), .))) %>%
+     mutate(across(where(is.numeric), ~ ifelse(Variable == "N", formatC(., format = "f", digits = 0), .))) %>%
      kable("latex", 
            booktabs = TRUE, 
-           col.names = c("Variable", "T-T", "T-C", "C-T", "C-C", "p (F-stat.)"), 
+           col.names = c("Variable", "T-T", "T-C", "C-T", "C-C", "\\textit{p}(F-stat.)"), 
            caption = "Summary statistics and p-value of the F-statistics for variables.", 
            label = "balance_table_up",
+           escape = FALSE,
            align = c("l", "r", "r", "r", "r", "r")) %>%
      kable_styling(latex_options = c("hold_position", "scale_down")) %>%
      add_header_above(c(" " = 1, "Means by Group" = 4, " " = 1)) %>%
      row_spec(0, bold = TRUE) %>%
-     footnote(general = sprintf("T denotes GPs that were reserved for women and C denotes other GPs. All the variables were taken from the 2001 Census Village Directory.
-            N indicates the number of Gram Panchayats. The p-value of the F-statistic is derived from regressions using randomized inference. 
-            We also fit a null model and a multinomial model that used all the above variables to predict the type of transition, e.g., T-T, T-C, etc. 
-            The p-value of the Likelihood Ratio test is %.2f which suggests that the complete multinomial model does not fit 
-              any better than a null model with no predictors.", p_value),
+     footnote(general = sprintf("T denotes GPs that were reserved for women and C denotes other GPs. All the covariates were taken from the 2001 Census Village Directory.
+            N indicates the number of Gram Panchayats. The p-value of the F-statistic is derived from regressions using randomization inference. 
+            We also fit a null model and a multinomial model that used all the above covariates to predict the assigned reservation sequence, e.g., T-T, T-C, etc. 
+            The p-value of the Likelihood Ratio test is %.2f, which suggests that, consistent with random assignment, the complete multinomial model, fits
+            no better than a null model with no predictors.", p_value),
               escape = FALSE,
             threeparttable = TRUE)
 

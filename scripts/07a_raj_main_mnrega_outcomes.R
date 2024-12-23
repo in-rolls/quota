@@ -119,6 +119,13 @@ mnrega_elex_raj_20_strict <- mnrega_elex_raj_20_strict  %>%
           )
 
 # Main
+main_outcome_caption <- "They are: 
+(i) All: The total number of completed projects, including areas not listed here like Fisheries, Drought Proofing, etc.;
+(ii) Rural Roads: The number of projects to improve connectivity and roads;
+(iii) Sanitation: The number of projects to improve sanitation facilities;
+(iv) Water Conservation: The number of projects to improve water conservation;
+(v) Trad. Water: The number of projects to maintain traditional water bodies."
+
 # Model Names
 model_names <- paste0("lm_", column_groups)
 mod_cols <- paste0(column_groups, "_tot_11_14")
@@ -145,16 +152,12 @@ n_comp_proj <- paste0(
 n_comp_main_models <- main_models[names(main_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_main_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014",
           covariate.labels = c("2005", "2010", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2014);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main.tex"))
 
 ## Ongoing Proj
@@ -166,16 +169,12 @@ n_ongoing_proj <- paste0(
 n_ongoing_models <- main_models[names(main_models) %in% n_ongoing_proj]
 
 custom_stargazer(n_ongoing_models,
-          title = "Effects of Reservations on the Number of Ongoing MNREGA Projects, 2011-2014",
+          title = "Effects of Reservations on the Number of Ongoing MNREGA Projects, 2011--2014",
           covariate.labels = c("2005", "2010", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_ongoing",
-          notes = c("All - Total ongoing MNREGA projects (2011--2014);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2014);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_ongoing.tex"))
 
 ## Expenditure
@@ -189,14 +188,10 @@ comp_expenditure_models <- main_models[names(main_models) %in% comp_expenditure]
 custom_stargazer(n_ongoing_models,
                  title = "Effects of Reservations on the Expenditure on Completed MNREGA Projects, 2011-2014",
                  covariate.labels = c("2005", "2010", "Constant"),
-                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_expenditure",
-                 notes = c("All - Expenditure on allMNREGA projects (2011--2014);", 
-                           "Rural Roads: Expenditure on projects to improve connectivity and roads (2011--2014);",
-                           "Sanitation:  Expenditure on projects to improve sanitation facilities  (2011--2014);",
-                           "Water Conservation: Expenditure on projects to improve water conservation (2011--2014);",
-                           "Trad. Water: Expenditure on projects to maintain traditional water bodies (2011--2014)."),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
                  out = here("tabs/mnrega_raj_05_10_main_comp_expenditure.tex"))
 ## Interaction
 int_models <- set_names(mod_cols, mod_cols)  %>% 
@@ -210,16 +205,12 @@ proportion_significant_pvalues(int_models)
 n_comp_int_models <- int_models[names(int_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_int_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014. (With Interaction Term).",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014. (With Interaction Term).",
           covariate.labels = c("2005", "2010", "2005 * 2010", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_interaction",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2014);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_interaction.tex"))
 
 ## Limit to Phase 1 and 2
@@ -238,16 +229,12 @@ proportion_significant_pvalues(p12_models)
 n_comp_p12_mods <- p12_models[names(p12_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_p12_mods,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014. (Phase 1 and 2 Only.)",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014. (Phase 1 and 2 Only.)",
           covariate.labels = c("2005", "2010", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_phase_1_2",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2014);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_phase_1_2.tex"))
 
 ### Limit to ST
@@ -264,16 +251,12 @@ map(st_models, glance)
 n_comp_st_models <- st_models[names(st_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_st_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014. (ST Only.)",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014. (ST Only.)",
           covariate.labels = c("2005", "2010", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_phase_st",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2014);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_st.tex"))
 
 ## Limit to Strict
@@ -286,16 +269,12 @@ map(strict_models, glance)
 n_comp_strict_models <- strict_models[names(strict_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_strict_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2014. (Strict Matching.)",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014. (Strict Matching.)",
           covariate.labels = c("2005", "2010", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_strict",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2014);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2014);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2014);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2014);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2014)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_strict.tex"))
 
 ### Extreme
@@ -323,16 +302,12 @@ n_comp_proj_11_23 <- paste0(
 n_comp_extreme_models <- extreme_models[names(extreme_models) %in% n_comp_proj_11_23]
 
 custom_stargazer(n_comp_extreme_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
           covariate.labels = c("T-T-T-T", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2023);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_extreme.tex"))
 
 ### All
@@ -349,20 +324,16 @@ map(all_models, glance)
 n_comp_all_models <- all_models[names(all_models) %in% n_comp_proj_11_23]
 
 custom_stargazer(n_comp_all_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
           covariate.labels = c("2005", "2010", "2015", "2020", 
                                "2005*2010", "2005*2015", "2010*2015", 
                                "2005*2020", "2010*2020", "2015*2020", "2005*2010*2015",
                                "2005*2010*2020", "2005*2015*2020", "2010*2015*2020", "2005*2010*2015*2020",
                                "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023_all",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2023);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_all.tex"))
 
 ### Dosage
@@ -383,16 +354,12 @@ map(dosage_models, glance)
 n_comp_dosage_models <- dosage_models[names(dosage_models) %in% n_comp_proj_11_23]
 
 custom_stargazer(n_comp_dosage_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
           covariate.labels = c("Reserved Once", "Reserved Twice", "Reserved Thrice", "Reserved Four Times", "Constant"),
-          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+          column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023_dosage",
-          notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
-                    "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
-                    "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
-                    "Water Conservation: Number of projects to improve water conservation (2011--2023);",
-                    "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_dosage.tex"))
 
 # Regular additive across years
@@ -406,16 +373,12 @@ map(add_models, glance)
 n_comp_add_models <- add_models[names(add_models) %in% n_comp_proj_11_23]
 
 custom_stargazer(n_comp_add_models,
-                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011-2023.",
+                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
                  covariate.labels = c("2005", "2010", "2015", "2020", "Constant"),
-                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_2011_2023_additive",
-                 notes = c("All - Total completed or ongoing MNREGA projects (2011--2023);", 
-                           "Rural Roads: Number of projects to improve connectivity and roads (2011--2023);",
-                           "Sanitation:  Number of projects to improve sanitation facilities  (2011--2023);",
-                           "Water Conservation: Number of projects to improve water conservation (2011--2023);",
-                           "Trad. Water: Number of projects to maintain traditional water bodies (2011--2023)."),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
                  out = here("tabs/mnrega_raj_05_20_main_additive.tex"))
 
 # Let's do by year
@@ -446,16 +409,12 @@ n_comp_proj <- paste0(
 n_comp_main_models <- main_models[names(main_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_main_models,
-                 title = "Effects of 2010 Reservations on the Number of Completed MNREGA Projects, 2011-2013",
+                 title = "Effects of 2010 Reservations on the Number of Completed MNREGA Projects, 2011--2013",
                  covariate.labels = c("2010", "Constant"),
-                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_10",
-                 notes = c("All - Total completed or ongoing MNREGA projects (2011--2013);", 
-                           "Rural Roads: Number of projects to improve connectivity and roads (2011--2013);",
-                           "Sanitation:  Number of projects to improve sanitation facilities  (2011--2013);",
-                           "Water Conservation: Number of projects to improve water conservation (2011--2013);",
-                           "Trad. Water: Number of projects to maintain traditional water bodies (2011--2013)."),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2013.", main_outcome_caption),
                  out = here("tabs/mnrega_raj_10_main.tex"))
 
 # 2015
@@ -484,16 +443,12 @@ n_comp_proj <- paste0(
 n_comp_main_models <- main_models[names(main_models) %in% n_comp_proj]
 
 custom_stargazer(n_comp_main_models,
-                 title = "Effects of 2015 Reservations on the Number of Completed MNREGA Projects, 2016-2018",
+                 title = "Effects of 2015 Reservations on the Number of Completed MNREGA Projects, 2016--2018",
                  covariate.labels = c("2015", "Constant"),
-                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_15",
-                 notes = c("All - Total completed or ongoing MNREGA projects (2016--2018);", 
-                           "Rural Roads: Number of projects to improve connectivity and roads (2016--2018);",
-                           "Sanitation:  Number of projects to improve sanitation facilities  (2016--2018);",
-                           "Water Conservation: Number of projects to improve water conservation (2016--2018);",
-                           "Trad. Water: Number of projects to maintain traditional water bodies (2016--2018)."),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2016--2018.", main_outcome_caption),
                  out = here("tabs/mnrega_raj_15_main.tex"))
 
 
@@ -528,9 +483,5 @@ custom_stargazer(n_comp_main_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_20",
-                 notes = c("All - Total completed or ongoing MNREGA projects (2021--2023);", 
-                           "Rural Roads: Number of projects to improve connectivity and roads (2021--2023);",
-                           "Sanitation:  Number of projects to improve sanitation facilities  (2021--2023);",
-                           "Water Conservation: Number of projects to improve water conservation (2021--2023);",
-                           "Trad. Water: Number of projects to maintain traditional water bodies (2021--2023)."),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
                  out = here("tabs/mnrega_raj_20_main.tex"))

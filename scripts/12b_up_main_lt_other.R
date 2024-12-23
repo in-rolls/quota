@@ -26,8 +26,8 @@ other_var <- list(
      "total_hhd_having_bpl_cards" = "BPL Cards",
      "total_no_of_eligible_beneficiari" = "Maternity Benefit",
      "wall_mat_solid_share" = "Solid Wall",
-     "roof_mat_solid_share" = "Solid Roof",
-     "two_crop_acre_sum" = "Irrigation"
+     "roof_mat_solid_share" = "Solid Roof"
+#     "two_crop_acre_sum" = "Irrigation"
      )
 
 # Let's create a GP Level dataset
@@ -52,16 +52,16 @@ model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
 custom_stargazer(models,
-          title = "Effects of Reservations on Other Short- and Long-term Outcomes",
+          title = "Effects of Reservations on Other Short- and Long-term Outcomes (UP)",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(other_var)),
           add.lines = list(c("Covariates", rep("No", length(other_var)))),
           label = "up_shrug_other_05_10",
-          notes = c("The outcomes are from the Mission Antyodya Facilities Survey from 2019.",
-                    "Female Children: Number of female children (0-6 years);",
-                    "BPL Cards: Number of Households having BPL ration cards;",
-                    "Maternity Benefit: Number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana",
-                    "Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;",
-                    "Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick;",
-                    "Irrigation: Total land with assured irrigation for two crops"),
+          notes = c("The outcomes are from the Mission Antyodya Survey from 2019. 
+                   The village level outcomes have been aggregated to a GP level. The outcomes are: 
+                     (i) Female Children: The number of female children (0-6 years);
+                     (ii) BPL Cards: The number of households with a BPL ration card;
+                     (iii) Maternity Benefit: The number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana (PMMVY)
+                     (iv) Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;
+                     (v) Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick."),
           out = "tabs/shrug_up_05_10_other.tex")

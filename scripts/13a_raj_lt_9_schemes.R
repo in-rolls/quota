@@ -77,13 +77,14 @@ custom_stargazer(models,
           column.labels = unlist(unname(children_var)),
           add.lines = list(c("Covariates", rep("No", length(children_var)))),
           label = "raj_shrug_schemes_05_10",
-          notes = c("The outcomes are from the Mission Antyodya Survey from 2019.",
-                    "BPL: HH with BPL Cards",
-                    "PMJAY: HH registered under PM Jan Arogya Yojana",
-                    "NSAP: HH with pensions under National Social Assistance Programme",
-                    "PMUY: HH with LPG connection under PM Ujjwala Yojana",
-                    "Saubhagaya: HH with electricity connection under Saubhayaga.",
-                    "PMMVY: Number of beneficiaries under PM Matru Vandana Yojana",
-                    "PMAY: HH receiving subsidies under PM Awaas Yojana",
-                    "PMJD: HH with zero-balance bank account under PM Jan Dhan"),
+          notes = c("The outcomes are from the Mission Antyodya Survey from 2019. 
+                   The village level outcomes have been aggregated to a GP level. The outcomes are:
+                   (i) BPL: The number of households with BPL Cards;
+                   (ii) PMJAY: The number of households registered under PM Jan Arogya Yojana;
+                   (iii) NSAP: The number of households with pensions under National Social Assistance Programme;
+                   (iv) PMUY: The number of households with LPG connection under PM Ujjwala Yojana;
+                   (v) Saubhagaya: The number of households with electricity connection under Saubhayaga;
+                   (vi) PMMVY: The number of beneficiaries under PM Matru Vandana Yojana;
+                   (vii) PMAY: HH receiving subsidies under PM Awaas Yojana;
+                   (viii) PMJD: HH with zero-balance bank account under PM Jan Dhan"),
           out = here("tabs/shrug_raj_05_10_schemes.tex"))
