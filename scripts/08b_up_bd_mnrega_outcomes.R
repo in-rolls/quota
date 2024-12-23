@@ -79,7 +79,7 @@ selected_log_model_names <- paste0(c("number_of_jobcards_issued",
 selected_log_models <- models[names(models) %in% selected_log_model_names]
 
 custom_stargazer(selected_models, selected_log_models,
-          title = "Effects of Reservations on Demand for Work and Women Employment via MNREGA, 2011-2014",
+          title = "Effects of Reservations on Demand for Work and Women Employment via MNREGA, 2011--2014 (UP)",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = c("Tot. Jobcards", "Reg. Workers", "Reg. Women",
                             "Log Tot. Jobcards", "Log Reg. Workers", "Log Reg. Women"),
@@ -119,14 +119,17 @@ p2_models <-  set_names(mod_cols, mod_cols) %>%
 selected_p2_models <- p2_models[names(p2_models) %in% selected_log_model_names]
 
 custom_stargazer(selected_p1_models, selected_p2_models,
-          title = "Effects of Reservations on Demand for Work and Women Employment via MNREGA, 2011-2014 (Phase 1 and 2, Bose and Das Sample)",
+          title = "Effects of Reservations on Demand for Work and Women Employment via MNREGA, 2011-2014;
+          Phase 1 and 2, Bose and Das Districts (UP)",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = c("Ph. 1 Jobcards", "Ph. 1 Workers", "Ph. 1 Women",
                             "Ph. 2 Jobcards", "Ph. 2 Workers", "Ph. 2 Women"),
           add.lines = list(c("Covariates", rep("No", 6))),
           label = "mnrega_main_up_bd",
-          notes = c("Total Jobcards (2011--2014);", 
-                    "Registered Workers (2011--2014);",
-                    "Registered Workers Women  (2011--2014);"),
+          notes = c("The outcomes are from administrative data for MNREGA for years 2011--2014. 
+                     Phase 1 and 2 refer to the districts covered in the respective phases of MNREGA. The outcomes are: 
+                     (i) The number of Jobcards; 
+                     (ii) The number of registered workers;
+                     (iii) The number of registered workers who are women;"),
           out = "tabs/mnrega_up_05_10_main_bose_phase_1_2_bd.tex",
           float.env = "sidewaystable")

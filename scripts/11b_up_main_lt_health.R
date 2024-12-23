@@ -53,15 +53,16 @@ model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
 custom_stargazer(models,
-          title = "Effects of Reservations on Long-term Outcomes Concerning Health",
+          title = "Effects of Reservations on Long-term Health Related Outcomes (UP)",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(health_var)),
           add.lines = list(c("Covariates", rep("No", length(health_var)))),
           label = "up_shrug_health_05_10",
-          notes = c("The outcomes are from the Mission Antyodya Facilities Survey from 2019.",
-                    "Primary Health Ctr.: Is there a primary health centre?",
-                    "Community Health Ctr.: Is there a community health centre?",
-                    "Maternal Health Ctr.: Is there a maternal health facility?",
-                    "Anemic Preg.: Number of anaemic pregnant women.",
-                    "Women Non-Stunted Children: Number of children categorized as non-stunted as per ICDS record."),
-          out = here("tabs/shrug_up_05_10_health.tex"))
+          notes = "The outcomes are from the Mission Antyodya Facilities Survey from 2019. The village level outcomes have been aggregated to a GP level. The outcomes are:
+                    (i) Primary Health Ctr.: Is there a primary health center?;
+                    (ii) Community Health Ctr.: Is there a community health center?;
+                    (iii) Maternal Health Ctr.: Is there a maternal health facility?;
+                    (iv) Anemic Preg. Women: The number of anaemic pregnant women;
+                    (v) Non-Stunted Children: The number of children categorized as non-stunted as per ICDS.",
+          out = here("tabs/shrug_up_05_10_health.tex"),
+          float.env = "sidewaystable")

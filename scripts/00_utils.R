@@ -85,3 +85,268 @@ custom_stargazer <- function(models, ...) {
           ...
      )
 }
+
+custom_stargazer <- function(models, notes, ..., out = NULL) {
+     # Capture stargazer output without table environments
+     stargazer_output <- capture.output(
+          stargazer(
+               models,
+               header = FALSE, # Prevent stargazer from wrapping its own table environment
+               type = "latex",
+               model.names = FALSE,
+               omit.stat = c("rsq", "ser", "f"),
+               digits = 2,
+               column.sep.width = "0pt",
+               dep.var.caption = "",
+               dep.var.labels.include = FALSE,
+               star.cutoffs = NULL,
+               report = "vcs",
+               no.space = TRUE,
+               single.row = FALSE,
+               font.size = "scriptsize",
+               ...
+          )
+     )
+     
+     # Remove any stargazer table environment manually
+     stargazer_output <- stargazer_output[
+          !grepl("\\\\begin\\{table\\}|\\\\end\\{table\\}", stargazer_output)
+     ]
+     
+     # Wrap the content in a proper LaTeX table environment
+     wrapped_output <- paste0(
+          "\\begin{table}[!htbp]\n",
+          "\\centering\n",
+          "\\begin{threeparttable}\n",
+          paste(stargazer_output, collapse = "\n"),
+          "\n\\begin{tablenotes}[flushleft]\n\\scriptsize\n",
+          paste0("\\item ", notes, collapse = "\n"),
+          "\n\\end{tablenotes}\n",
+          "\\end{threeparttable}\n",
+          "\\end{table}"
+     )
+     
+     # Write to file or print to console
+     if (!is.null(out)) {
+          writeLines(wrapped_output, con = out)
+     } else {
+          cat(wrapped_output, sep = "\n")
+     }
+}
+
+custom_stargazer <- function(models, notes, float_env = "table", ..., out = NULL) {
+     # Capture stargazer output without table environments
+     stargazer_output <- capture.output(
+          stargazer(
+               models,
+               header = FALSE, # Prevent stargazer from wrapping its own table environment
+               type = "latex",
+               model.names = FALSE,
+               omit.stat = c("rsq", "ser", "f"),
+               digits = 2,
+               column.sep.width = "0pt",
+               dep.var.caption = "",
+               dep.var.labels.include = FALSE,
+               star.cutoffs = NULL,
+               report = "vcs",
+               no.space = TRUE,
+               single.row = FALSE,
+               font.size = "scriptsize",
+               ...
+          )
+     )
+     
+     # Remove any LaTeX table environment from stargazer output
+     stargazer_output <- stargazer_output[
+          !grepl("\\\\begin\\{table\\}|\\\\end\\{table\\}|\\\\begin\\{sidewaystable\\}|\\\\end\\{sidewaystable\\}", stargazer_output)
+     ]
+     
+     # Wrap the content in the specified float environment (default: table)
+     wrapped_output <- paste0(
+          "\\begin{", float_env, "}[!htbp]\n",
+          "\\centering\n",
+          "\\begin{threeparttable}\n",
+          paste(stargazer_output, collapse = "\n"),
+          "\n\\begin{tablenotes}[flushleft]\n\\scriptsize\n",
+          paste0("\\item ", notes, collapse = "\n"),
+          "\n\\end{tablenotes}\n",
+          "\\end{threeparttable}\n",
+          "\\end{", float_env, "}"
+     )
+     
+     # Write to file or print to console
+     if (!is.null(out)) {
+          writeLines(wrapped_output, con = out)
+     } else {
+          cat(wrapped_output, sep = "\n")
+     }
+}
+
+custom_stargazer <- function(models, notes, ..., out = NULL) {
+     stargazer_output <- capture.output(
+          stargazer(
+               models,
+               header = FALSE, # Prevent stargazer from wrapping its own table environment
+               type = "latex",
+               model.names = FALSE,
+               omit.stat = c("rsq", "ser", "f"),
+               digits = 2,
+               column.sep.width = "0pt",
+               dep.var.caption = "",
+               dep.var.labels.include = FALSE,
+               star.cutoffs = NULL,
+               report = "vcs",
+               no.space = TRUE,
+               single.row = FALSE,
+               font.size = "scriptsize",
+               ...
+          )
+     )
+     
+     # Remove any LaTeX table environment from stargazer output
+     stargazer_output <- stargazer_output[
+          !grepl("\\\\begin\\{table\\}|\\\\end\\{table\\}|\\\\begin\\{sidewaystable\\}|\\\\end\\{sidewaystable\\}", stargazer_output)
+     ]
+     
+     # Wrap the content in a proper LaTeX sidewaystable environment
+     wrapped_output <- paste0(
+          "\\begin{sidewaystable}[!htbp]\n",
+          "\\centering\n",
+          "\\begin{threeparttable}\n",
+          paste(stargazer_output, collapse = "\n"),
+          "\n\\begin{tablenotes}[flushleft]\n\\scriptsize\n",
+          paste0("\\item ", notes, collapse = "\n"), # Add multiline notes
+          "\n\\end{tablenotes}\n",
+          "\\end{threeparttable}\n",
+          "\\end{sidewaystable}"
+     )
+     
+     # Write to file or print to console
+     if (!is.null(out)) {
+          writeLines(wrapped_output, con = out)
+     } else {
+          cat(wrapped_output, sep = "\n")
+     }
+}
+
+custom_stargazer <- function(models, notes, float.env = "table", ..., out = NULL) {
+     # Capture stargazer output without table environments
+     stargazer_output <- capture.output(
+          stargazer(
+               models,
+               header = FALSE, # Prevent stargazer from wrapping its own table environment
+               type = "latex",
+               model.names = FALSE,
+               omit.stat = c("rsq", "ser", "f"),
+               digits = 2,
+               column.sep.width = "0pt",
+               dep.var.caption = "",
+               dep.var.labels.include = FALSE,
+               star.cutoffs = NULL,
+               report = "vcs",
+               no.space = TRUE,
+               single.row = FALSE,
+               font.size = "scriptsize",
+               ...
+          )
+     )
+     
+     # Remove any LaTeX table environment from stargazer output
+     stargazer_output <- stargazer_output[
+          !grepl("\\\\begin\\{table\\}|\\\\end\\{table\\}|\\\\begin\\{sidewaystable\\}|\\\\end\\{sidewaystable\\}", stargazer_output)
+     ]
+     
+     # Wrap the content in the specified float environment
+     wrapped_output <- paste0(
+          "\\begin{", float_env, "}[!htbp]\n", # Dynamically set the float environment
+          "\\centering\n",
+          "\\begin{threeparttable}\n",
+          paste(stargazer_output, collapse = "\n"),
+          "\n\\begin{tablenotes}[flushleft]\n\\scriptsize\n",
+          paste0("\\item ", notes, collapse = "\n"), # Add multiline notes
+          "\n\\end{tablenotes}\n",
+          "\\end{threeparttable}\n",
+          "\\end{", float_env, "}"
+     )
+     
+     # Write to file or print to console
+     if (!is.null(out)) {
+          writeLines(wrapped_output, con = out)
+     } else {
+          cat(wrapped_output, sep = "\n")
+     }
+}
+
+custom_stargazer <- function(models, notes, float.env = "table", ..., out = NULL) {
+     stargazer_output <- capture.output(
+          stargazer(
+               models,
+               header = FALSE,
+               type = "latex",
+               model.names = FALSE,
+               omit.stat = c("rsq", "ser", "f"),
+               digits = 2,
+               column.sep.width = "0pt",
+               dep.var.caption = "",
+               dep.var.labels.include = FALSE,
+               star.cutoffs = NULL,
+               report = "vcs",
+               no.space = TRUE,
+               single.row = FALSE,
+               font.size = "scriptsize",
+               notes.append = FALSE,
+               notes = "",
+               notes.align = "l",
+               ...
+          )
+     )
+     
+     stargazer_output <- gsub(
+          pattern = "Constant\\s*&\\s*([-+0-9.]+)(\\**)?\\s*&",
+          replacement = "Constant & \\2 &",
+          x = stargazer_output
+     )
+     
+     # Remove any existing table or sidewaystable environments
+     stargazer_output <- stargazer_output[
+          !grepl("\\\\begin\\{table\\}|\\\\end\\{table\\}|\\\\begin\\{sidewaystable\\}|\\\\end\\{sidewaystable\\}", stargazer_output)
+     ]
+     
+     # Generate the output for `table`
+     if (float.env == "table") {
+          wrapped_output <- paste0(
+               "\\begin{table}[!htbp]\n",
+               "\\centering\n",
+               "\\begin{threeparttable}\n",
+               paste(stargazer_output, collapse = "\n"),
+               "\n\\begin{tablenotes}[flushleft]\n\\scriptsize\n",
+               paste0("\\item ", notes, collapse = "\n"),
+               "\n\\end{tablenotes}\n",
+               "\\end{threeparttable}\n",
+               "\\end{table}"
+          )
+     }
+     # Generate the output for `sidewaystable`
+     else if (float.env == "sidewaystable") {
+          wrapped_output <- paste0(
+               "\\begin{sidewaystable}[!htbp]\n",
+               "\\centering\n",
+               "\\begin{threeparttable}\n",
+               paste(stargazer_output, collapse = "\n"),
+               "\n\\begin{tablenotes}[flushleft]\n\\setlength{\\itemindent}{0em}\n\\scriptsize\n",
+               paste0("\\item ", notes, collapse = "\n"), # Add custom multiline notes
+               "\n\\end{tablenotes}\n",
+               "\\end{threeparttable}\n",
+               "\\end{sidewaystable}"
+          )
+     } else {
+          stop("Invalid float_env. Use 'table' or 'sidewaystable'.")
+     }
+     
+     # Write to file or print to console
+     if (!is.null(out)) {
+          writeLines(wrapped_output, con = out)
+     } else {
+          cat(wrapped_output, sep = "\n")
+     }
+}

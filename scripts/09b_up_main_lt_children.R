@@ -59,14 +59,16 @@ model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
 custom_stargazer(models,
-          title = "Effects of Reservations on Long-term Outcomes Concerning Children",
+          title = "Effects of Reservations on Long-term Outcomes Concerning Children (UP)",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(children_var)),
           add.lines = list(c("Covariates", rep("No", length(children_var)))),
           label = "up_shrug_children_05_10",
-          notes = c("Immunized: Percent of 0--3 year old children who are immunized.",
-                    "Underweight: Percent underweight children under 6.",
-                    "Truant: Percent children not attending school.",
-                    "Anganwadi: Percent of children under 6 registered in Aanganwadis.",
-                    "SC/ST: Number of SC/ST/OBC/minority children getting scholarship."),
+          notes = "The outcome variables are from Antyodya Survey from 2019.
+                   The village level outcomes have been aggregated to a GP level. The outcomes are:
+                   (i) Immunized: Percent of 0--3 year old children who are immunized. 
+                   (ii) Underweight: Percent underweight children under 6.
+                   (iii) Truant: Percent children not attending school.
+                   (iv) Anganwadi: Percent of children under 6 registered in Aanganwadis.
+                   (v) SC/ST: Number of SC/ST/OBC/minority children getting scholarship.",
           out = here("tabs/shrug_up_05_10_children.tex"))

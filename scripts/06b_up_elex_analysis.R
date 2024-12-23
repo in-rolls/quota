@@ -20,7 +20,7 @@ up_10_15_ff <- read_parquet("data/up/up_10_15_fuzzy.parquet")
 
 # District
 
-up_dist_wise_transition <- up %>%
+up_dist_wise_transition <- up_05_10_ff %>%
      group_by(district_name_eng_2010) %>%
      summarise(
           prop_1 = mean(female_res_2005 == 1),
@@ -56,19 +56,10 @@ with(up_all, summary(lm(female_res_2015 ~ female_res_2010)))
 rand_or_not    <- with(mnrega_up_05_10, lm(female_res_2010 ~ female_res_2005))
 rand_or_not_p1 <- with(mnrega_up_05_10[mnrega_up_05_10$phase_1_2005 == 1 | mnrega_up_05_10$phase_2_2005 == 1, ], lm(female_res_2010 ~ female_res_2005))
 
-stargazer(rand_or_not, rand_or_not_p1,
-          type = "latex", 
+custom_stargazer(list(rand_or_not, rand_or_not_p1),
           title = "Predicting 2010 GP Reservation Status Using the 2005 Reservation Status in UP.",
-          model.names = FALSE,
           covariate.labels = c("2005", "Constant"),
           column.labels = c("All", "Phase 1 or 2"),
-          omit.stat = c("rsq", "ser", "f"),
-          single.row = FALSE,
-          digits = 2,
-          dep.var.caption = "",
-          no.space = TRUE,
           label = "rand_or_no_up",
-          star.cutoffs = NULL,
-          report = "vcs",
-          dep.var.labels.include = FALSE,
+          notes = "",
           out = "tabs/rand_or_not_2010_on_2005_up.tex")

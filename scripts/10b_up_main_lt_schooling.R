@@ -50,14 +50,16 @@ model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
 custom_stargazer(models,
-          title = "Effects of Reservations on Long-term Outcomes Concerning Schooling",
+          title = "Effects of Reservations on Long-term Outcomes Concerning Schooling (UP)",
           covariate.labels = c("2005", "2010", "Constant"),
           column.labels = unlist(unname(school_var)),
           add.lines = list(c("Covariates", rep("No", length(school_var)))),
           label = "up_shrug_schooling_05_10",
-          notes = c("The outcomes are from the Mission Antyodya Survey from 2019.",
-                    "Primary School: Is there a primary school or not;",
-                    "Middle School: Is there is a middle school available;",
-                    "Tot. Pri. School Students: The number of students enrolled in primary school per 1000 people;",
-                    "Mid-day Meal: Is there is a mid-day meal facility for students in school."),
+          notes = c("The outcomes are from the Mission Antyodya Facilities Survey from 2019. 
+                     The village level outcomes have been aggregated to a GP level. 
+                     The outcomes are:
+                         (i) Primary School: Is there a primary school?
+                         (ii) Middle School: Is there a middle school?
+                         (iii) Tot. Pri. School Students: The number of students enrolled in primary schools per 1000 people;
+                         (iv) Mid-day Meal: Is there is a mid-day meal facility for students in school?"),
           out = here("tabs/shrug_up_05_10_schooling.tex"))
