@@ -174,7 +174,14 @@ custom_stargazer(n_ongoing_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_ongoing",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = 
+               paste("The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                     "They are: 
+                     (i) All: The total number of ongoing projects, including areas not listed here like Fisheries, Drought Proofing, etc.;
+                     (ii) Rural Roads: The number of projects to improve connectivity and roads;
+                     (iii) Sanitation: The number of projects to improve sanitation facilities;
+                     (iv) Water Conservation: The number of projects to improve water conservation;
+                     (v) Trad. Water: The number of projects to maintain traditional water bodies."),
           out = here("tabs/mnrega_raj_05_10_main_ongoing.tex"))
 
 ## Expenditure
@@ -191,7 +198,13 @@ custom_stargazer(n_ongoing_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_expenditure",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                               "They are: 
+                     (i) All: The expenditure on all the projects, including areas not listed here like Fisheries, Drought Proofing, etc.;
+                     (ii) Rural Roads: The expenditure on projects to improve connectivity and roads;
+                     (iii) Sanitation: The expenditure on projects to improve sanitation facilities;
+                     (iv) Water Conservation: The expenditure on projects to improve water conservation;
+                     (v) Trad. Water: The expenditure on projects to maintain traditional water bodies."),
                  out = here("tabs/mnrega_raj_05_10_main_comp_expenditure.tex"))
 ## Interaction
 int_models <- set_names(mod_cols, mod_cols)  %>% 
