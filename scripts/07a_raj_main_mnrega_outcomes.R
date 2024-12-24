@@ -296,7 +296,7 @@ raj_extreme <- mnrega_elex_raj_05_20 %>%
 
 # Model Names
 model_names <- paste0("lm_", column_groups)
-mod_cols <- paste0(column_groups, "_tot_11_23")
+mod_cols <- paste0(column_groups, "_tot_21_23")
 
 # Apply the model fitting function across all specified column groups
 extreme_models <- set_names(mod_cols, mod_cols) %>% 
@@ -307,25 +307,25 @@ map(extreme_models, tidy)
 map(extreme_models, glance)
 
 # Number of projects: All Rural Roads Sanitation Water Conservation Traditional Water
-n_comp_proj_11_23 <- paste0(
+n_comp_proj_21_23 <- paste0(
                     c("total", "connectivity", "childcare", "sanitation", "water_conserve", "water_trad"), 
-                    "_comp_project_tot_11_23"
+                    "_comp_project_tot_21_23"
                     )
 
-n_comp_extreme_models <- extreme_models[names(extreme_models) %in% n_comp_proj_11_23]
+n_comp_extreme_models <- extreme_models[names(extreme_models) %in% n_comp_proj_21_23]
 
 custom_stargazer(n_comp_extreme_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2021--2023.",
           covariate.labels = c("T-T-T-T", "Constant"),
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_extreme.tex"))
 
 ### All
 model_names <- paste0("lm_", column_groups)
-mod_cols <- paste0(column_groups, "_tot_11_23")
+mod_cols <- paste0(column_groups, "_tot_21_23")
 
 all_models <- set_names(mod_cols, mod_cols)  %>% 
      map(~ lm(as.formula(paste(.x, "~ female_res_2005*female_res_2010*female_res_2015*female_res_2020")), data = mnrega_elex_raj_05_20))
@@ -334,10 +334,10 @@ all_models <- set_names(mod_cols, mod_cols)  %>%
 map(all_models, tidy)
 map(all_models, glance)
 
-n_comp_all_models <- all_models[names(all_models) %in% n_comp_proj_11_23]
+n_comp_all_models <- all_models[names(all_models) %in% n_comp_proj_21_23]
 
 custom_stargazer(n_comp_all_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2021--2023.",
           covariate.labels = c("2005", "2010", "2015", "2020", 
                                "2005*2010", "2005*2015", "2010*2015", 
                                "2005*2020", "2010*2020", "2015*2020", "2005*2010*2015",
@@ -346,7 +346,7 @@ custom_stargazer(n_comp_all_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023_all",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_all.tex"))
 
 ### Dosage
@@ -355,7 +355,7 @@ mnrega_elex_raj_05_20 <- mnrega_elex_raj_05_20 %>%
             female_res_sum_factor = factor(female_res_sum, levels = 0:max(female_res_sum)))
 # Model Names
 model_names <- paste0("lm_", column_groups)
-mod_cols <- paste0(column_groups, "_tot_11_23")
+mod_cols <- paste0(column_groups, "_tot_21_23")
 
 dosage_models <- set_names(mod_cols, mod_cols)  %>% 
      map(~ lm(as.formula(paste(.x, "~ female_res_sum_factor")), data = mnrega_elex_raj_05_20))
@@ -364,15 +364,15 @@ dosage_models <- set_names(mod_cols, mod_cols)  %>%
 map(dosage_models, tidy)
 map(dosage_models, glance)
 
-n_comp_dosage_models <- dosage_models[names(dosage_models) %in% n_comp_proj_11_23]
+n_comp_dosage_models <- dosage_models[names(dosage_models) %in% n_comp_proj_21_23]
 
 custom_stargazer(n_comp_dosage_models,
-          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
+          title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2021--2023.",
           covariate.labels = c("Reserved Once", "Reserved Twice", "Reserved Thrice", "Reserved Four Times", "Constant"),
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023_dosage",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
+          notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_dosage.tex"))
 
 # Regular additive across years
@@ -383,15 +383,15 @@ add_models <- set_names(mod_cols, mod_cols)  %>%
 map(add_models, tidy)
 map(add_models, glance)
 
-n_comp_add_models <- add_models[names(add_models) %in% n_comp_proj_11_23]
+n_comp_add_models <- add_models[names(add_models) %in% n_comp_proj_21_23]
 
 custom_stargazer(n_comp_add_models,
-                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2023.",
+                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2021--2023.",
                  covariate.labels = c("2005", "2010", "2015", "2020", "Constant"),
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_2011_2023_additive",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2023.", main_outcome_caption),
+                 notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
                  out = here("tabs/mnrega_raj_05_20_main_additive.tex"))
 
 # Let's do by year
