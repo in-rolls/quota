@@ -124,10 +124,10 @@ components <- c(
      "std_water" = "Piped Water Access",
      "std_bank" = "Dhan Jan Bank Account",
      "std_housing" = "Housing Assist Received ",
-     "std_kuccha" = "Poor Wall Quality",
+     "std_kuccha" = "Housing Quality",
      "std_health" = "Health Coverage",
      "std_pension" = "Get Pension Assist",
-     "std_sanitary" = "Sanitary Access",
+     "std_sanitary" = "No Sanitary Facility",
      "food_grain" = "Get Food Assist",
      "food_grain_nfsa" = "NFSA Eligibility",
      "farm_activities" = "Only Farm Activities",
@@ -150,7 +150,8 @@ for(var in names(components)) {
      formula <- as.formula(paste(var, "~category_label"))
      
      # Run regression
-     lm_result <- lm(formula, data = df)
+     lm_result <- lm(formula,  data = df[(df$category_2005 == "GEN"|df$category_2005 == "ST") & 
+                                                    (df$category_2010 == "GEN"|df$category_2010 == "ST") ,])
      
      # Extract coefficients (we want the 4th coeff because I am interested in STST comparison, taking second coefficient)
      coef_data <- summary(lm_result)$coefficients
