@@ -17,17 +17,7 @@ ay <- read_csv(here("data/shrug/shrug-antyodaya-csv/antyodaya_shrid.csv"))
 
 raj_elex_ay <- raj_elex_shrug %>% 
      inner_join(ay, by = "shrid2")
-## Will use raj_elex_ay for the rest of the analysis and renaming for ease - 
 
-df = raj_elex_ay
-
-df$category_2010 = ifelse(df$category_2010 == "GENW", "GEN",df$category_2010 )
-df$category_2010 = ifelse(df$category_2010 == "OBCW", "OBC",df$category_2010 )
-df$category_2010 = ifelse(df$category_2010 == "SCW", "SC",df$category_2010 )
-df$category_2010 = ifelse(df$category_2010 == "STW", "ST",df$category_2010 )
-
-df$category_label = paste(df$category_2005, df$category_2010, sep = "_")
-table(df$category_label)
 
 hist(df$piped_water_fully_covered)
 df = df[df$category_label !="OBC_NA",]
