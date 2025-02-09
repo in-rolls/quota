@@ -149,3 +149,6 @@ set.seed(31415)
 sampled_df <- mnrega_elex_raj_05_20[sample(nrow(mnrega_elex_raj_05_20), size = 100), ]
 cols_2022 <- colnames(mnrega_elex_raj_05_20)[grepl("2022", colnames(mnrega_elex_raj_05_20))]
 write.csv(sampled_df[, c("district_2020", "ps_2020", "gp_2020", cols_2022)], file = "data/mnrega/audit_mnrega_2022.csv")
+
+write.csv(mnrega_elex_raj_05_20[, c("dist_name_new_2015", "samiti_name_2015", "gp_new_2015",
+                                    "female_res_2005", "female_res_2010", "female_res_2015", "female_res_2020")], file = "data/mnrega/audit_mnrega_2022_2.csv")
