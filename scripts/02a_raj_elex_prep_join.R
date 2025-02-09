@@ -31,11 +31,13 @@ elex_raj_05_10 <- read_csv(here("data/raj/sp_2005_2010 - sp_2005_2010.csv")) %>%
      ungroup() %>%
      mutate(dist_name_new_2010 = tolower(dist_name_new_2010)) %>%
      filter(!(dist_name_new_2010 == 'baran')) %>%
-     mutate(female_res_2005 = ifelse( grepl("W",  reservation_2005) == TRUE, 1, 0),
-            female_res_2010 = ifelse( grepl("W",  reservation_2010) == TRUE, 1, 0),
+     mutate(female_res_2005 = ifelse(grepl("W", reservation_2005), 1, 0),
+            female_res_2010 = ifelse(grepl("W", reservation_2010), 1, 0),
             case = paste0(female_res_2005, female_res_2010, sep = "_"),
             phase_1 = dist_name_new_2010 %in% c("banswara", "dungarpur", "jhalawar", "karauli", "sirohi", "udaipur"),
-            phase_2 = dist_name_new_2010 %in% c("barmer", "chittorgarh", "jaisalmer", "jalore", "sawaimadhopur", "tonk")
+            phase_2 = dist_name_new_2010 %in% c("barmer", "chittorgarh", "jaisalmer", "jalore", "sawaimadhopur", "tonk"),
+            caste_res_2005 = trimws(gsub("\\s*W$", "", reservation_2005)),
+            caste_res_2010 = trimws(gsub("\\s*W$", "", reservation_2010))
      )
 
 write_parquet(elex_raj_05_10, sink = here("data/raj/elex_raj_05_10.parquet"))
@@ -48,14 +50,28 @@ elex_raj_05_20 <- read_csv(here("data/raj/sp_05_10_15_20_best_manual.csv")) %>%
      ungroup() %>%
      filter(!(dist_name_new_2010 == 'BARAN')) %>%
      mutate(dist_name_new_2010 = tolower(dist_name_new_2010),
-            female_res_2005 = ifelse( grepl("W",  reservation_2005) == TRUE, 1, 0),
-            female_res_2010 = ifelse( grepl("W",  reservation_2010) == TRUE, 1, 0),
-            female_res_2015 = ifelse( grepl("W",  reservation_2015) == TRUE, 1, 0),
-            female_res_2020 = ifelse( grepl("W",  reservation_2020) == TRUE, 1, 0),
+            female_res_2005 = ifelse(grepl("W",  reservation_2005) == TRUE, 1, 0),
+            female_res_2010 = ifelse(grepl("W",  reservation_2010) == TRUE, 1, 0),
+            female_res_2015 = ifelse(grepl("W",  reservation_2015) == TRUE, 1, 0),
+            female_res_2020 = ifelse(grepl("W",  reservation_2020) == TRUE, 1, 0),
             case = paste(female_res_2005, female_res_2010, female_res_2015, female_res_2020, sep = "_"),
             phase_1 = dist_name_new_2010 %in% c("banswara", "dungarpur", "jhalawar", "karauli", "sirohi", "udaipur"),
-            phase_2 = dist_name_new_2010 %in% c("barmer", "chittorgarh", "jaisalmer", "jalore", "sawaimadhopur", "tonk")
+            phase_2 = dist_name_new_2010 %in% c("barmer", "chittorgarh", "jaisalmer", "jalore", "sawaimadhopur", "tonk"),
+            caste_res_2005 = trimws(gsub("\\s*W$", "", reservation_2005)),
+            caste_res_2010 = trimws(gsub("\\s*W$", "", reservation_2010)),
+            caste_res_2015 = case_when(
+                 grepl("general", reservation_2015, ignore.case = TRUE) ~ "GEN",
+                 grepl("obc", reservation_2015, ignore.case = TRUE)     ~ "OBC",
+                 grepl("sc", reservation_2015, ignore.case = TRUE)      ~ "SC",
+                 grepl("st", reservation_2015, ignore.case = TRUE)      ~ "ST",
+                 TRUE  ~ reservation_2015),
+            caste_res_2020 = case_when(
+                 grepl("general", reservation_2020, ignore.case = TRUE) ~ "GEN",
+                 grepl("obc", reservation_2020, ignore.case = TRUE)     ~ "OBC",
+                 grepl("sc", reservation_2020, ignore.case = TRUE)      ~ "SC",
+                 grepl("st", reservation_2020, ignore.case = TRUE)      ~ "ST",
+                 TRUE  ~ reservation_2020
+            )
      )
 
 write_parquet(elex_raj_05_20, sink = here("data/raj/elex_raj_05_20.parquet"))
-
