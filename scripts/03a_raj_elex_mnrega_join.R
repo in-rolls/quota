@@ -34,7 +34,6 @@ elex_raj_10_r <- elex_raj_10 %>%
      filter(!is.na(mnrega_block_name)) %>%
      filter(!match_name %in% match_name[duplicated(match_name)])
 
-
 elex_raj_15_r <- elex_raj_15 %>%
      mutate(samiti_name_new = tolower(samiti_name_new)) %>%
      left_join(elex_mnrega_ps_block, by = c("samiti_name_new" = "elex_samiti_name")) %>%
