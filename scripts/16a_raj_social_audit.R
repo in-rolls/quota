@@ -90,12 +90,17 @@ modelsummary(
      title = "Effects of Reservations on the Audit Performance.",
      label = "main_mnrega_audit",
      gof_omit  = "AIC|BIC|RMSE|^R2$",
-     notes = "The outcomes are from MNREGA social audits from 2020--2024.",
+     notes = c("The outcomes are from MNREGA social audits from 2020--2024. 
+               Works: Are validated number of works different from reported?;
+               Households: Are validated number of households different from reported?;
+               Job Cards: What percentage of jobs cards are with people?;
+               Adq. Manpower: Is there adequate manpower to implement MNREGA?;
+               Rozgar Diwas: Is Rozgar Diwas organized every month?"
+     ),
      notes_append  = TRUE,
      notes_align   = "l",
      latex_env = "talltblr",
      keepxp = FALSE,
-     add_rows = NULL,
      stars = TRUE,
      output = here("tabs/mnrega_raj_05_20_audit.tex")
 )
