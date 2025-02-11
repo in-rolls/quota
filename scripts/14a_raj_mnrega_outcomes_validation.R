@@ -8,6 +8,8 @@ library(readr)
 library(stargazer)
 library(tidyr)
 library(ggplot2)
+library(knitr)
+library(kableExtra)
 
 # Source utils
 source(here("scripts/00_utils.R"))
@@ -96,7 +98,52 @@ correlation_results <- bases %>%
 # Print correlation results
 print(correlation_results)
 
+# Create a labeling dictionary
+label_dict <- c(
+     "total_ongoing_project_tot_11_13" = "Total Ongoing Projects (2011-2013)",
+     "total_ongoing_project_tot_16_18" = "Total Ongoing Projects (2016-2018)",
+     "total_ongoing_project_tot_21_23" = "Total Ongoing Projects (2021-2023)",
+     "connectivity_ongoing_project_tot_11_13" = "Connectivity Projects (2011-2013)",
+     "connectivity_ongoing_project_tot_16_18" = "Connectivity Projects (2016-2018)",
+     "connectivity_ongoing_project_tot_21_23" = "Connectivity Projects (2021-2023)",
+     "sanitation_ongoing_project_tot_11_13" = "Sanitation Projects (2011-2013)",
+     "sanitation_ongoing_project_tot_16_18" = "Sanitation Projects (2016-2018)",
+     "sanitation_ongoing_project_tot_21_23" = "Sanitation Projects (2021-2023)",
+     "water_conserve_ongoing_project_tot_11_13" = "Water Conservation Projects (2011-2013)",
+     "water_conserve_ongoing_project_tot_16_18" = "Water Conservation Projects (2016-2018)",
+     "water_conserve_ongoing_project_tot_21_23" = "Water Conservation Projects (2021-2023)",
+     "water_trad_ongoing_project_tot_11_13" = "Traditional Water Projects (2011-2013)",
+     "water_trad_ongoing_project_tot_16_18" = "Traditional Water Projects (2016-2018)",
+     "water_trad_ongoing_project_tot_21_23" = "Traditional Water Projects (2021-2023)",
+     "drinking_water_ongoing_project_tot_11_13" = "Drinking Water Projects (2011-2013)",
+     "drinking_water_ongoing_project_tot_16_18" = "Drinking Water Projects (2016-2018)"
+)
 
+# Transform the correlation results
+formatted_corr <- correlation_results %>%
+     mutate(
+          Var1 = label_dict[Var1],
+          Var2 = label_dict[Var2],
+          group_label = base
+     ) %>%
+     arrange(base, desc(Freq)) %>%
+     mutate(across(where(is.numeric), ~ round(.x, 2))) %>%
+     select(-group_label, -base)
+
+formatted_corr %>% 
+     kable(
+          caption = "Correlation of Ongoing Projects Across Different Time Periods", 
+          col.names = c("Variable 1", "Variable 2", "Correlation"), 
+          format = "latex", 
+          booktabs = TRUE,
+          digits = 3
+     ) %>% 
+     kable_styling(
+          position = "center",
+          latex_options = c("hold_position"),
+          font_size = 6
+     ) %>%
+     save_kable(here("tabs/mnrega_corr_over_time.tex"))
 
 
 # List of time periods and components
