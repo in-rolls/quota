@@ -111,6 +111,8 @@ balance_long <- balance_wide %>%
      mutate(Variable = recode(Variable, !!!balance_vars))
 
 # Omnibus F-stat
+# Mulinom uses a random seed so let's set one for repro.
+set.seed(31415)
 formula <- as.formula(paste("treat ~", paste(names(balance_vars), collapse = " + ")))
 full_model <- multinom(formula, data = up_elex_vd_01_gp)
 null_model <- multinom(treat ~ 1, data = up_elex_vd_01_gp)
@@ -133,8 +135,8 @@ bal_table <- balance_long %>%
      footnote(general = sprintf("T denotes GPs that were reserved for women and C denotes other GPs. All the covariates were taken from the 2001 Census Village Directory.
             N indicates the number of Gram Panchayats. The p-value of the F-statistic is derived from regressions using randomization inference. 
             We also fit a null model and a multinomial model that used all the above covariates to predict the assigned reservation sequence, e.g., T-T, T-C, etc. 
-            The p-value of the Likelihood Ratio test is %.2f, which suggests that, consistent with random assignment, the complete multinomial model, fits
-            no better than a null model with no predictors.", p_value),
+            The p-value of the Likelihood Ratio test is %.2f, which suggests that, inconsistent with random assignment, the complete multinomial model, fits
+            better than a null model with no predictors.", p_value),
               escape = FALSE,
             threeparttable = TRUE)
 
