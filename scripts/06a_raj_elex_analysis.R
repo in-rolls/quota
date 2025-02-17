@@ -28,17 +28,6 @@ rand_or_not    <- with(mnrega_elex_raj_05_10, lm(female_res_2010 ~ female_res_20
 rand_or_not_p1 <- with(mnrega_elex_raj_05_10[mnrega_elex_raj_05_10$phase_1 == 1  | mnrega_elex_raj_05_10$phase_2 == 1, ], lm(female_res_2010 ~ female_res_2005))
 rand_or_not_fe <- with(mnrega_elex_raj_05_10, lm(female_res_2010 ~ female_res_2005 + as.factor(dist_name_new_2010)))
 
-custom_stargazer(list(rand_or_not, rand_or_not_fe, rand_or_not_p1),
-          title = "Predicting 2010 GP Reservation Status Using the 2005 Reservation Status in Rajastan.",
-          covariate.labels = c("2005", "Constant"),
-          column.labels = c("All", "With District FE", "Phase 1 and 2"),
-          omit = "as\\.factor\\(dist_name_new_2010\\)",
-          add.lines = list(c("District FE", "No", "Yes", "No")),
-          label = "rand_or_no_raj",
-          notes = c("Within district regressions yield 1 significant coefficient", 
-                    "which is what we expect by chance."),
-          out = here("tabs/rand_or_not_2010_on_2005_raj.tex"))
-
 ## Run within district regressions and calculate sig. p-values
 
 get_p_value <- function(df) {
@@ -54,6 +43,19 @@ p_values <- mnrega_elex_raj_05_10 %>%
 
 count_below_threshold <- p_values %>%
      summarize(count = sum(p_value < 0.05))
+
+custom_stargazer(list(rand_or_not, rand_or_not_fe, rand_or_not_p1),
+          title = "Predicting 2010 GP Reservation Status Using the 2005 Reservation Status in Rajastan.",
+          covariate.labels = c("2005", "Constant"),
+          column.labels = c("All", "With District FE", "Phase 1 and 2"),
+          omit = "as\\.factor\\(dist_name_new_2010\\)",
+          add.lines = list(c("District FE", "No", "Yes", "No")),
+          label = "rand_or_no_raj",
+          digits = 2,
+          notes = c("Statistical significance symbols for the constant terms are suppressed.
+                     Phase 1 and 2 limits regression to districts covered in the first two phases of MNREGA.
+                     Within district regressions yield 1 significant coefficient which is what we expect by chance."),
+          out = here("tabs/rand_or_not_2010_on_2005_raj.tex"))
 
 ## Effect of Reservation on Women Being Elected When Seat is Unreserved
 elect_05_10    <- with(mnrega_elex_raj_05_10[mnrega_elex_raj_05_10$female_res_2010 == 0, ], lm(I(sex_2010 == 'F')~ female_res_2005))

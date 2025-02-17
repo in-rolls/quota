@@ -79,7 +79,7 @@ custom_stargazer(models,
           column.labels = unlist(unname(children_var)),
           add.lines = list(c("Covariates", rep("No", length(children_var)))),
           label = "up_shrug_schemes_05_10",
-          notes = c("The outcomes are from the Mission Antyodya Survey from 2019. 
+          notes = paste(cons_term, "The outcomes are from the Mission Antyodya Survey from 2019. 
                    The village level outcomes have been aggregated to a GP level. The outcomes are:
                    (i) BPL: The number of households with BPL Cards;
                    (ii) PMJAY: The number of households registered under PM Jan Arogya Yojana;

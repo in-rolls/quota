@@ -57,7 +57,7 @@ custom_stargazer(models,
           column.labels = unlist(unname(other_var)),
           add.lines = list(c("Covariates", rep("No", length(other_var)))),
           label = "up_shrug_other_05_10",
-          notes = c("The outcomes are from the Mission Antyodya Survey from 2019. 
+          notes = paste(cons_term, "The outcomes are from the Mission Antyodya Survey from 2019. 
                    The village level outcomes have been aggregated to a GP level. The outcomes are: 
                      (i) Female Children: The number of female children (0-6 years);
                      (ii) BPL Cards: The number of households with a BPL ration card;

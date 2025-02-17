@@ -4,6 +4,9 @@ scripts_dir <- "scripts"
 # Define a regex pattern to match filenames starting with the desired prefixes
 pattern <- "^(00_|0[1-9][a-z]?_|1[0-3][a-z]?_).*\\.R$"
 
+# Run only analysis scripts
+# pattern <- "^(0[5-9][a-z]?_|1[0-7][a-z]?_).*\\.R$"
+
 # Get all matching scripts in the directory
 scripts <- list.files(scripts_dir, pattern = pattern, full.names = TRUE)
 

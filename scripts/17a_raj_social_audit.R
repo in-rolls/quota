@@ -12,6 +12,7 @@ library(fixest)
 library(modelsummary)
 library(pbapply)
 library(janitor)
+library(stringi)
 
 # Source utils
 source(here("scripts/00_utils.R"))
@@ -35,8 +36,8 @@ mnrega_raj_sa_elex <- mnrega_elex_raj_05_20 %>%
 mnrega_raj_sa_elex <- mnrega_raj_sa_elex %>%
      clean_names() %>%
      mutate(
-          diff_works = total_works - works_verified > 0,
-          diff_households = total_households - households_verified > 0,
+          diff_works = (total_works - works_verified == 0),
+          diff_households = (total_households - households_verified == 0),
           job_cards_with_people_numeric = case_when(
                job_cards_with_people == "Less than 25%"      ~ 0,
                job_cards_with_people == "Between 25% and 50%"  ~ .33,
@@ -75,12 +76,13 @@ label_mapping <- c(
      "female_res_2005" = "2005",
      "female_res_2010" = "2010",
      "female_res_2015" = "2015",
-     "female_res_2020" = "2020"
+     "female_res_2020" = "2020",
+     "(Intercept)" = "Constant"
      
 )
 
 coef_names <- names(coef(models[[1]]))
-cov_names <- coef_names[coef_names != "(Intercept)"]
+#cov_names <- coef_names[coef_names != "(Intercept)"]
 cov_labels <- label_mapping[cov_names]
 
 # Write
@@ -90,17 +92,19 @@ modelsummary(
      title = "Effects of Reservations on the Audit Performance.",
      label = "main_mnrega_audit",
      gof_omit  = "AIC|BIC|RMSE|^R2$",
-     notes = c("The outcomes are from MNREGA social audits from 2020--2024. 
-               Works: Are validated number of works different from reported?;
-               Households: Are validated number of households different from reported?;
+     notes = paste(cons_term, "The outcomes are from MNREGA social audits from 2020--2024.
+               All outcomes have been coded to lie between 0 and 1 with 1 reflecting greater 
+               adherence to procedures or lower discrepancy between the audit and reported amounts.
+               Works: Are validated number of works the same as reported?;
+               Households: Are validated number of households the same as reported?;
                Job Cards: What percentage of jobs cards are with people?;
                Adq. Manpower: Is there adequate manpower to implement MNREGA?;
                Rozgar Diwas: Is Rozgar Diwas organized every month?"
      ),
      notes_append  = TRUE,
      notes_align   = "l",
-     latex_env = "talltblr",
      keepxp = FALSE,
-     stars = TRUE,
+     stars = FALSE,
+     fmt = 2,
      output = here("tabs/mnrega_raj_05_20_audit.tex")
 )

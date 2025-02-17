@@ -157,7 +157,7 @@ custom_stargazer(n_comp_main_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term, "The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main.tex"))
 
 ## Ongoing Proj
@@ -175,7 +175,7 @@ custom_stargazer(n_ongoing_models,
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_ongoing",
           notes = 
-               paste("The outcomes are from MNREGA administrative data for years 2011--2014.", 
+               paste(cons_term, "The outcomes are from MNREGA administrative data for years 2011--2014.", 
                      "They are: 
                      (i) All: The total number of ongoing projects, including areas not listed here like Fisheries, Drought Proofing, etc.;
                      (ii) Rural Roads: The number of projects to improve connectivity and roads;
@@ -198,7 +198,7 @@ custom_stargazer(n_ongoing_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_expenditure",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                 notes = paste(cons_term, "The outcomes are from MNREGA administrative data for years 2011--2014.", 
                                "They are: 
                      (i) All: The expenditure on all the projects, including areas not listed here like Fisheries, Drought Proofing, etc.;
                      (ii) Rural Roads: The expenditure on projects to improve connectivity and roads;
@@ -223,7 +223,9 @@ custom_stargazer(n_comp_int_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_interaction",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term, 
+                        "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_interaction.tex"))
 
 ## Limit to Phase 1 and 2
@@ -247,7 +249,9 @@ custom_stargazer(n_comp_p12_mods,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_phase_1_2",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term, 
+                        "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_phase_1_2.tex"))
 
 ### Limit to ST
@@ -269,7 +273,9 @@ custom_stargazer(n_comp_st_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_phase_st",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term, 
+                        "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_st.tex"))
 
 ## Limit to Strict
@@ -287,7 +293,9 @@ custom_stargazer(n_comp_strict_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_strict",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term, 
+                        "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_raj_05_10_main_strict.tex"))
 
 ### Extreme
@@ -346,7 +354,9 @@ custom_stargazer(n_comp_all_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023_all",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
+          notes = paste(cons_term, 
+                        "The outcomes are from MNREGA administrative data for years 2021--2023.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_all.tex"))
 
 ### Dosage
@@ -372,7 +382,9 @@ custom_stargazer(n_comp_dosage_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023_dosage",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
+          notes = paste(cons_term,
+                        "The outcomes are from MNREGA administrative data for years 2021--2023.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_dosage.tex"))
 
 # Regular additive across years
@@ -391,7 +403,9 @@ custom_stargazer(n_comp_add_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_2011_2023_additive",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
+                 notes = paste(cons_term,
+                               "The outcomes are from MNREGA administrative data for years 2021--2023.", 
+                               main_outcome_caption),
                  out = here("tabs/mnrega_raj_05_20_main_additive.tex"))
 
 # Let's do by year
@@ -427,7 +441,9 @@ custom_stargazer(n_comp_main_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_10",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2013.", main_outcome_caption),
+                 notes = paste(cons_term, 
+                               "The outcomes are from MNREGA administrative data for years 2011--2013.", 
+                               main_outcome_caption),
                  out = here("tabs/mnrega_raj_10_main.tex"))
 
 # 2015
@@ -461,7 +477,9 @@ custom_stargazer(n_comp_main_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_15",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2016--2018.", main_outcome_caption),
+                 notes = paste(cons_term,
+                               "The outcomes are from MNREGA administrative data for years 2016--2018.", 
+                               main_outcome_caption),
                  out = here("tabs/mnrega_raj_15_main.tex"))
 
 
@@ -496,5 +514,7 @@ custom_stargazer(n_comp_main_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Traditional Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_20",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
+                 notes = paste(cons_term,
+                               "The outcomes are from MNREGA administrative data for years 2021--2023.", 
+                               main_outcome_caption),
                  out = here("tabs/mnrega_raj_20_main.tex"))

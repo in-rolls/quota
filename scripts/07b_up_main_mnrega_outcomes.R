@@ -81,7 +81,9 @@ custom_stargazer(selected_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_up_2005_2010",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term, 
+                        "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                        main_outcome_caption),
           out = "tabs/mnrega_up_05_10_main.tex")
 
 # Bose and Das Districts
@@ -112,5 +114,7 @@ custom_stargazer(selected_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "mnrega_up_bd_districts_05_10",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+          notes = paste(cons_term,
+                        "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                        main_outcome_caption),
           out = here("tabs/mnrega_up_05_10_main_bd_districts.tex"))

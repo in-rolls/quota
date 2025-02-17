@@ -60,8 +60,10 @@ proportion_significant
 
 library(stargazer)
 
+# Constant term 
+cons_term <- "Statistical significance symbols for the constant terms are suppressed."
 
-custom_stargazer <- function(models, notes, float.env = "table", ..., out = NULL) {
+custom_stargazer <- function(models, notes, digits = 2, float.env = "table", ..., out = NULL) {
      stargazer_output <- capture.output(
           stargazer(
                models,
@@ -69,12 +71,12 @@ custom_stargazer <- function(models, notes, float.env = "table", ..., out = NULL
                type = "latex",
                model.names = FALSE,
                omit.stat = c("rsq", "ser", "f"),
-               digits = 2,
+               digits = digits,
                column.sep.width = "0pt",
                dep.var.caption = "",
                dep.var.labels.include = FALSE,
-               star.cutoffs = NULL,
-               report = "vcs",
+               star.cutoffs = c(0.05, 0.01, 0.001),
+               report = "vc*s",
                no.space = TRUE,
                single.row = FALSE,
                font.size = "scriptsize",
@@ -85,11 +87,18 @@ custom_stargazer <- function(models, notes, float.env = "table", ..., out = NULL
           )
      )
      
-     stargazer_output <- gsub(
-          pattern = "Constant\\s*&\\s*([-+0-9.]+)(\\**)?\\s*&",
-          replacement = "Constant & \\1 &",
-          x = stargazer_output
-     )
+     repeat {
+          new_output <- gsub(
+               pattern = "(Constant.*?)(\\$.*?\\$)",
+               replacement = "\\1",
+               x = stargazer_output,
+               perl = TRUE
+          )
+          if(identical(new_output, stargazer_output)) break
+          stargazer_output <- new_output
+     }
+     
+     
      
      # Remove any existing table or sidewaystable environments
      stargazer_output <- stargazer_output[

@@ -74,7 +74,7 @@ custom_stargazer(list(selected_models, selected_log_models),
                                    "Log Tot. Jobcards", "Log Reg. Workers", "Log Reg. Women"),
                  add.lines = list(c("Covariates", rep("No", 6))),
                  label = "mnrega_main_raj_bose",
-                 notes = c("The outcomes are from administrative data for MNREGA for years 2011--2014. 
+                 notes = paste(cons_term, "The outcomes are from administrative data for MNREGA for years 2011--2014. 
                            The outcomes are: 
                      (i) The number of Jobcards; 
                      (ii) The number of registered workers;
