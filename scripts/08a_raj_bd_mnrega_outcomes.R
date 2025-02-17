@@ -24,7 +24,13 @@ mnrega_elex_raj_05_10 <- mnrega_elex_raj_05_10 %>%
                        col_pattern <- paste0(.x, "_201[1-4]$")
                        new_col <- rowSums(select(mnrega_elex_raj_05_10, matches(col_pattern)), na.rm = TRUE)
                        return(new_col)
-                  })
+                  }),
+          jobcard_ratio_mean_11_14 = {
+               jobcards <- as.matrix(select(mnrega_elex_raj_05_10, matches("number_of_jobcards_issued_201[1-4]")))
+               workers  <- as.matrix(select(mnrega_elex_raj_05_10, matches("registered_workers_total_workers_201[1-4]")))
+               ratio_mat <- jobcards / workers
+               rowMeans(ratio_mat, na.rm = TRUE)
+          }
      )
 
 # Model Names
@@ -46,7 +52,7 @@ selected_model_names <- paste0(c("number_of_jobcards_issued",
 selected_models <- models[names(models) %in% selected_model_names]
 
 # Get the logged DV
-models <- set_names(mod_cols, mod_cols) %>% 
+log_models <- set_names(mod_cols, mod_cols) %>% 
      map(~ {
           # Fit the linear model with the log-transformed dependent variable
           lm(as.formula(paste("log(", .x, "+ 1) ~ female_res_2005 + female_res_2010")), 
@@ -54,18 +60,14 @@ models <- set_names(mod_cols, mod_cols) %>%
      })
 
 # Tidy and Glance/Editor view
-model_tidies  <- map(models, tidy)
-model_glances <- map(models, glance)
+map(log_models, tidy)
+map(log_models, glance)
 
-# B/D Outcomes
 selected_log_model_names <- paste0(c("number_of_jobcards_issued", 
                                      "registered_workers_total_workers",
                                      "registered_workers_women"), "_tot_11_14")
 
-selected_log_models <- models[names(models) %in% selected_log_model_names]
-# Tidy and Glance
-map(models, tidy)
-map(models, glance)
+selected_log_models <- log_models[names(log_models) %in% selected_log_model_names]
 
 custom_stargazer(list(selected_models, selected_log_models),
                  title = "Effects of Reservations on Demand for Work and Women Employment via MNREGA, 2011--2014",
@@ -81,3 +83,50 @@ custom_stargazer(list(selected_models, selected_log_models),
                      (iii) The number of registered workers who are women."),
                  out = "tabs/mnrega_raj_05_10_main_bose.tex",
                  float.env = "sidewaystable")
+
+# Let's study jobcards/workers
+clean_data <- mnrega_elex_raj_05_10 %>% 
+     filter(
+          is.finite(jobcard_ratio_mean_11_14),
+          is.finite(female_res_2005),
+          is.finite(female_res_2010)
+     )
+
+summary(lm(jobcard_ratio_mean_11_14 ~ female_res_2005 + female_res_2010, data = clean_data))
+
+# Let's assume where registered workers is 0 is fake news so filter those out and re-estimate
+clean_data <- mnrega_elex_raj_05_10 %>% 
+     filter(registered_workers_total_workers_tot_11_14 != 0)
+
+models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = clean_data))
+
+# Tidy and Glance/Editor view
+model_tidies  <- map(models, tidy)
+model_glances <- map(models, glance)
+
+selected_model_names <- paste0(c("number_of_jobcards_issued", 
+                                 "registered_workers_total_workers",
+                                 "registered_workers_women"), "_tot_11_14")
+
+# Filter clean_models to only include the specified models
+selected_models <- models[names(models) %in% selected_model_names]
+
+# Get the logged DV
+log_models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ {
+          # Fit the linear model with the log-transformed dependent variable
+          lm(as.formula(paste("log(", .x, "+ 1) ~ female_res_2005 + female_res_2010")), 
+             data = mnrega_elex_raj_05_10)
+     })
+
+# Tidy and Glance/Editor view
+map(log_models, tidy)
+map(log_models, glance)
+
+selected_log_model_names <- paste0(c("number_of_jobcards_issued", 
+                                     "registered_workers_total_workers",
+                                     "registered_workers_women"), "_tot_11_14")
+
+selected_log_models <- log_models[names(log_models) %in% selected_log_model_names]
+
