@@ -170,5 +170,7 @@ custom_stargazer(n_comp_main_models,
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_caste_mnrega",
-                 notes = paste("The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+                 notes = paste(cons_term, 
+                               "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                               main_outcome_caption),
                  out = here("tabs/mnrega_caste_raj_05_10_main.tex"))

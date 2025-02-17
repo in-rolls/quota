@@ -85,7 +85,7 @@ custom_stargazer(list(selected_models, selected_log_models),
                             "Log Tot. Jobcards", "Log Reg. Workers", "Log Reg. Women"),
           add.lines = list(c("Covariates", rep("No", 6))),
           label = "mnrega_main_up",
-          notes = c("The outcomes are from administrative data for MNREGA for years 2011--2014. The outcomes are: 
+          notes = paste(cons_term, "The outcomes are from administrative data for MNREGA for years 2011--2014. The outcomes are: 
                      (i) The number of Jobcards; 
                      (ii) The number of registered workers;
                      (iii) The number of registered workers who are women."),
@@ -127,7 +127,8 @@ custom_stargazer(selected_p1_models, selected_p2_models,
                             "Ph. 2 Jobcards", "Ph. 2 Workers", "Ph. 2 Women"),
           add.lines = list(c("Covariates", rep("No", 6))),
           label = "mnrega_main_up_bd",
-          notes = c("The outcomes are from administrative data for MNREGA for years 2011--2014. 
+          digits = 2,
+          notes = paste(cons_term, "The outcomes are from administrative data for MNREGA for years 2011--2014. 
                      Phase 1 and 2 refer to the districts covered in the respective phases of MNREGA. The outcomes are: 
                      (i) The number of Jobcards; 
                      (ii) The number of registered workers;
