@@ -43,7 +43,8 @@ mnrega_elex_raj_05_10 <- mnrega_elex_raj_05_10 %>%
                        col_pattern_11_13 <- paste0(.x, "_201[1-3]$")
                        new_col_11_13 <- rowSums(select(mnrega_elex_raj_05_10, matches(col_pattern_11_13)), na.rm = TRUE)
                        return(new_col_11_13)
-                  })
+                  }),
+          ds_bl = paste(dist_name_2005, samiti_name_2010)
      )
 
 mnrega_elex_raj_05_10_strict <- mnrega_elex_raj_05_10_strict %>%
@@ -132,7 +133,7 @@ mod_cols <- paste0(column_groups, "_tot_11_14")
 
 # Just a dist/sam fe model to see how much variance it explains
 #dist_sam_models <- set_names(mod_cols, mod_cols) %>% 
-#     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = mnrega_elex_raj_05_10))
+#     map(~ lm(as.formula(paste(.x, "~ dist_sam")), data = dist_name_2010))
 
 # Actual 
 main_models <- set_names(mod_cols, mod_cols) %>% 
@@ -206,6 +207,35 @@ custom_stargazer(n_ongoing_models,
                      (iv) Water Conservation: The expenditure on projects to improve water conservation;
                      (v) Trad. Water: The expenditure on projects to maintain traditional water bodies."),
                  out = here("tabs/mnrega_raj_05_10_main_comp_expenditure.tex"))
+
+## Let's do district/block FE
+
+# Actual 
+fe_models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010 + ds_bl")), data = mnrega_elex_raj_05_10))
+
+# Print
+map(fe_models, ~ tidy(.x) %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
+map(fe_models, glance)
+
+# Number of completed projects
+n_comp_proj <- paste0(
+     c("total", "connectivity", "childcare", "sanitation", "water_conserve", "water_trad"), 
+     "_comp_project_tot_11_14"
+)
+
+n_comp_fe_models <- fe_models[names(fe_models) %in% n_comp_proj]
+
+custom_stargazer(n_comp_fe_models,
+                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014 (With District-Block Fixed Effects)",
+                 covariate.labels = c("2005", "2010", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
+                 add.lines = list(c("Covariates", rep("Yes", 5))),
+                 label = "main_mnrega_fe",
+                 omit = "^ds_bl",
+                 notes = paste(cons_term, "The outcomes are from MNREGA administrative data for years 2011--2014.", main_outcome_caption),
+                 out = here("tabs/mnrega_raj_05_10_main_fe.tex"))
+
 ## Interaction
 int_models <- set_names(mod_cols, mod_cols)  %>% 
      map(~ lm(as.formula(paste(.x, "~ female_res_2005*female_res_2010")), data = mnrega_elex_raj_05_10))
@@ -328,7 +358,7 @@ custom_stargazer(n_comp_extreme_models,
           column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
           add.lines = list(c("Covariates", rep("No", 5))),
           label = "main_mnrega_2011_2023",
-          notes = paste("The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
+          notes = paste(cons_term, "The outcomes are from MNREGA administrative data for years 2021--2023.", main_outcome_caption),
           out = here("tabs/mnrega_raj_05_20_main_extreme.tex"))
 
 ### All
