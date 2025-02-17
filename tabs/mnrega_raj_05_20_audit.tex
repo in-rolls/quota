@@ -2,10 +2,11 @@
 \centering
 \begin{talltblr}[         %% tabularray outer open
 caption={Effects of Reservations on the Audit Performance.},
-note{}={+ p \num{< 0.1}, * p \num{< 0.05}, ** p \num{< 0.01}, *** p \num{< 0.001}},
-note{ }={The outcomes are from MNREGA social audits from 2020--2024. 
-               Works: Are validated number of works different from reported?;
-               Households: Are validated number of households different from reported?;
+note{}={Statistical significance symbols for the constant terms are suppressed. The outcomes are from MNREGA social audits from 2020--2024.
+               All outcomes have been coded to lie between 0 and 1 with 1 reflecting greater 
+               adherence to procedures or lower discrepancy between the audit and reported amounts.
+               Works: Are validated number of works the same as reported?;
+               Households: Are validated number of households the same as reported?;
                Job Cards: What percentage of jobs cards are with people?;
                Adq. Manpower: Is there adequate manpower to implement MNREGA?;
                Rozgar Diwas: Is Rozgar Diwas organized every month?},
@@ -14,18 +15,20 @@ note{ }={The outcomes are from MNREGA social audits from 2020--2024.
 colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
 column{2,3,4,5,6}={}{halign=c,},
 column{1}={}{halign=l,},
-hline{10}={1,2,3,4,5,6}{solid, black, 0.05em},
+hline{12}={1,2,3,4,5,6}{solid, black, 0.05em},
 }                     %% tabularray inner close
 \toprule
 & Works & Households & Job Cards & Adq. Manpower & Rozgar Diwas \\ \midrule %% TinyTableHeader
-2005       & \num{0.003}     & \num{-0.026}    & \num{-0.008}    & \num{0.013}     & \num{-0.029}    \\
-& (\num{0.053})   & (\num{0.048})   & (\num{0.016})   & (\num{0.017})   & (\num{0.038})   \\
-2010       & \num{0.000}     & \num{0.005}     & \num{0.007}     & \num{0.000}     & \num{-0.054}    \\
-& (\num{0.067})   & (\num{0.060})   & (\num{0.018})   & (\num{0.021})   & (\num{0.051})   \\
-2015       & \num{0.012}     & \num{0.006}     & \num{-0.012}    & \num{0.002}     & \num{-0.039}    \\
-& (\num{0.068})   & (\num{0.059})   & (\num{0.018})   & (\num{0.020})   & (\num{0.050})   \\
-2020       & \num{0.021}     & \num{0.036}     & \num{-0.020}    & \num{-0.002}    & \num{0.014}     \\
-& (\num{0.053})   & (\num{0.046})   & (\num{0.016})   & (\num{0.017})   & (\num{0.038})   \\
+2005       & \num{0.00}      & \num{0.03}      & \num{-0.01}     & \num{0.01}      & \num{-0.03}     \\
+& (\num{0.05})    & (\num{0.05})    & (\num{0.02})    & (\num{0.02})    & (\num{0.04})    \\
+2010       & \num{0.00}      & \num{-0.01}     & \num{0.01}      & \num{0.00}      & \num{-0.05}     \\
+& (\num{0.07})    & (\num{0.06})    & (\num{0.02})    & (\num{0.02})    & (\num{0.05})    \\
+2015       & \num{-0.01}     & \num{-0.01}     & \num{-0.01}     & \num{0.00}      & \num{-0.04}     \\
+& (\num{0.07})    & (\num{0.06})    & (\num{0.02})    & (\num{0.02})    & (\num{0.05})    \\
+2020       & \num{-0.02}     & \num{-0.04}     & \num{-0.02}     & \num{0.00}      & \num{0.01}      \\
+& (\num{0.05})    & (\num{0.05})    & (\num{0.02})    & (\num{0.02})    & (\num{0.04})    \\
+Constant   & \num{0.34}      & \num{0.28}      & \num{0.90}      & \num{0.88}      & \num{0.85}      \\
+& (\num{0.08})    & (\num{0.06})    & (\num{0.02})    & (\num{0.02})    & (\num{0.05})    \\
 Num.Obs.   & \num{936}       & \num{936}       & \num{936}       & \num{932}       & \num{936}       \\
 R2 Adj.    & \num{-0.004}    & \num{-0.002}    & \num{-0.001}    & \num{-0.003}    & \num{0.001}     \\
 Std.Errors & by: match\_name & by: match\_name & by: match\_name & by: match\_name & by: match\_name \\
