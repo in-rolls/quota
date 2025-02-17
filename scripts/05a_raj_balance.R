@@ -111,6 +111,8 @@ balance_long <- balance_wide %>%
      mutate(Variable = recode(Variable, !!!balance_vars))
 
 # Omnibus F-stat
+# Mulinom uses a random seed so let's set one for repro.
+set.seed(31415)
 formula <- as.formula(paste("treat ~", paste(names(balance_vars), collapse = " + ")))
 full_model <- multinom(formula, data = raj_elex_vd_01_gp)
 null_model <- multinom(treat ~ 1, data = raj_elex_vd_01_gp)
@@ -127,7 +129,7 @@ bal_table <- balance_long %>%
            label = "balance_table_raj",
            escape = FALSE,
            align = c("l", "r", "r", "r", "r", "r")) %>%
-     kable_styling(latex_options = c("scale_down")) %>%
+     kable_styling(latex_options = c("hold_position", "scale_down")) %>%
      add_header_above(c(" " = 1, "Means by Group" = 4, " " = 1)) %>%
      row_spec(0, bold = TRUE) %>%
      footnote(general = sprintf("T denotes GPs that were reserved for women and C denotes other GPs. All the covariates were taken from the 2001 Census Village Directory.
