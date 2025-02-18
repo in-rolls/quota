@@ -113,7 +113,7 @@ custom_stargazer <- function(models, notes, digits = 2, float.env = "table", ...
                "\\begin{threeparttable}\n",
                paste(stargazer_output, collapse = "\n"),
                "\n\\begin{tablenotes}[flushleft]\n\\scriptsize\n",
-               paste0("\\item ", notes, collapse = "\n"),
+               paste0("\\item[] ", notes, collapse = "\n"),
                "\n\\end{tablenotes}\n",
                "\\end{threeparttable}\n",
                "\\end{table}"
@@ -127,7 +127,7 @@ custom_stargazer <- function(models, notes, digits = 2, float.env = "table", ...
                "\\begin{threeparttable}\n",
                paste(stargazer_output, collapse = "\n"),
                "\n\\begin{tablenotes}[flushleft]\n\\setlength{\\itemindent}{0em}\n\\scriptsize\n",
-               paste0("\\item ", notes, collapse = "\n"), # Add custom multiline notes
+               paste0("\\item[] ", notes, collapse = "\n"), # Add custom multiline notes
                "\n\\end{tablenotes}\n",
                "\\end{threeparttable}\n",
                "\\end{sidewaystable}"
