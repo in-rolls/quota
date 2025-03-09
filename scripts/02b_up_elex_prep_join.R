@@ -16,6 +16,13 @@ up_2010 <- read_parquet(here("data/up/up_gp_sarpanch_2010_fixed_with_translitera
 up_2015 <- read_parquet(here("data/up/up_gp_sarpanch_2015_fixed_with_transliteration.parquet"))
 up_2021 <- read_parquet(here("data/up/up_gp_sarpanch_2021_fixed_with_transliteration.parquet"))
 
+# Jeff
+## Notes from Jeff
+### The variable gp_code_jj11 should be the unique identifier for the 2010 elections, 
+# while gp_code_lgd21 will be the one for the 2015 and 2021 elections.  The 2010 data isn't as good quality
+# since we didn't really use that much for our project, but the 2015-2021 match should be better. 
+jeff <- haven::read_dta((here("data/up/weaver_data.dta"))) 
+
 # Let's filter to winners for 2021
 up_2021 <- up_2021 %>% filter(result == 'विजेता')
 
@@ -241,3 +248,20 @@ up_05_10_15_21_ff <- process_matched_dataframe(
 write_parquet(up_05_10_ff, sink = here("data/up/up_05_10_fuzzy.parquet"))
 write_parquet(up_05_10_15_ff, sink = here("data/up/up_05_10_15_fuzzy.parquet"))
 write_parquet(up_05_10_15_21_ff, sink = here("data/up/up_all_fuzzy.parquet"))
+
+## Compliance seems low in UP
+summary(lm(winner_female ~ reservation_female, data = jeff))
+summary(lm(I(cand_sex_fin_2005 == "महिला") ~ female_res_2005, data = up_2005_dedupe_suff))
+summary(lm(I(cand_sex_fin_2010 == "महिला") ~ female_res_2010, data = up_2010_dedupe_suff))
+summary(lm(I(sex_2015 == "महिला") ~ female_res_2015, data = up_2015_dedupe_suff))
+summary(lm(I(sex_2021== "महिला") ~ female_res_2021, data = up_2021_dedupe_suff))
+
+# Merge with Jeff's data
+
+##     select(election, 
+##            district_code_ele15, districtname_lgd21, districtcode_lgd21, 
+##            block_code_ele15, blockcode_lgd21, 
+##            gp_code_jj11, gp_code_ele15, gp_code_ele20, gp_code_lgd21, 
+##            gp_name_jj11, gp_name_ele15, gp_name_ele15_t, gp_name_lgd21,
+##     )
+
