@@ -14,7 +14,20 @@ mnrega_elex_up_05_10 <- read_parquet(here("data/up/mnrega_elex_up_05_10.parquet"
 
 mnrega_elex_up_05_10 <- mnrega_elex_up_05_10 %>% 
      mutate(female_res_2005 = grepl("Female", gp_res_status_fin_eng_2005),
-            female_res_2010 = grepl("Female", gp_res_status_fin_eng_2010)
+            female_res_2010 = grepl("Female", gp_res_status_fin_eng_2010),
+            sex_2005 = case_when(
+               grepl("महिला", sex_2005) ~ 1,  # Any text containing "महिला" → 1 (female)
+               grepl("पुरुष", sex_2005) ~ 0,  # Any text containing "पुरुष" → 0 (male)
+               TRUE ~ NA_real_                # Everything else → NA
+           ),
+           sex_2010 = case_when(
+               grepl("महिला", sex_2010) ~ 1,  # Any text containing "महिला" → 1 (female)
+               grepl("पुरुष", sex_2010) ~ 0,  # Any text containing "पुरुष" → 0 (male)
+               TRUE ~ NA_real_             # Everything else → NA
+          ),
+          
+          female_sex_2005 = female_res_2005 & sex_2005,
+          female_sex_2010 = female_res_2010 & sex_2010,
      )
 
 # ## Line 32 - there cannot be any missing values - where do these come from? Investigate?
@@ -118,3 +131,38 @@ custom_stargazer(selected_models,
                         "The outcomes are from MNREGA administrative data for years 2011--2014.", 
                         main_outcome_caption),
           out = here("tabs/mnrega_up_05_10_main_bd_districts.tex"))
+
+## Given weird compliance issues, let's try sex_2005 etc.
+#----------
+
+# Function to fit 
+fit_model_for_group <- function(column_name, data) {
+     sufficient_data <- complete.cases(data[[column_name]], data$female_sex_2005, data$female_sex_2010)
+     if (sum(sufficient_data) > 0) {
+          lm(as.formula(paste(column_name, "~ female_sex_2005 + female_sex_2010")), data = data)
+     } else {
+          NULL  # Indicate failure to fit the model due to insufficient data
+     }
+}
+
+# Apply the model fitting function across all specified column groups
+models <- set_names(mod_cols, mod_cols) %>% 
+     map(~ fit_model_for_group(.x, mnrega_elex_up_05_10))
+
+# Tidy and Glance
+model_tidies <- map(models, tidy)
+model_glances <- map(models, glance)
+
+# Filter clean_models to only include the specified models
+selected_models <- models[names(models) %in% selected_model_names]
+
+custom_stargazer(selected_models,
+                 title = "Effects of Reservations on the Number of Completed MNREGA Projects, 2011--2014 (UP, Compliers)",
+                 covariate.labels = c("2005", "2010", "Constant"),
+                 column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
+                 add.lines = list(c("Covariates", rep("No", 5))),
+                 label = "main_mnrega_up_2005_2010_compliers",
+                 notes = paste(cons_term, 
+                               "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                               main_outcome_caption),
+                 out = "tabs/mnrega_up_05_10_main_compliers.tex")
