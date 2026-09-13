@@ -37,14 +37,30 @@ by both analyses; running the tables does not require the source files.
 
 `07c_up_cdm_mnrega_spending.R` supplies separate unadjusted, district-adjusted,
 and local common-slope OLS associations; these are not the source paper's fuzzy
-RD. Period totals sum observed annual amounts and leave entirely unobserved
-periods missing. All spending measures are thousands of rupees per person.
-The earlier period includes FY 2015–16, which spans the October 2015 election.
-`output/cdm_mnrega_summary.csv` reports coverage: among 9,203 GPs with known
-reservation, later-period spending is observed for 2,643 in sanitation, 107 in
-water, and 8,688 overall. The water comparisons therefore describe a very small
-observed subset. Full-precision results are in `cdm_mnrega_local_ols.csv` and
-`cdm_mnrega_ols.csv` under `output/`.
+RD. The main tables assume an absent spending category means zero expenditure
+when both total-expenditure components are recorded for that GP-year. Both category
+components must be absent; a partially missing amount remains missing. This is an
+assumption about categories with no projects, not a verified coding correction.
+Observed amounts are retained. Entirely unavailable total spending remains missing.
+Period totals sum available annual amounts, including partially observed periods.
+All spending measures are thousands of rupees per person. The earlier period
+includes FY 2015–16, which spans the October 2015 election.
+
+The existing output CSVs retain both `absent_category_zero` (main tables) and
+`recorded_only` (exclude absent categories) under `assumption`.
+`output/cdm_mnrega_summary.csv` distinguishes source-observed coverage (`observed`),
+coverage under each assumption (`available`), and GPs with any assumed-zero year
+(`with_assumed_zero`). Of 9,203 GPs with known reservation, post-period sanitation
+and water amounts are recorded for 2,643 and 107, respectively; the main assumption
+makes both outcomes available for 8,688 GPs. The remaining 515 have no reported
+total spending in the post period.
+
+At bandwidth 0.10, this changes the sanitation coefficient from −0.64 to −0.19
+rupees per person (N 2,131 to 6,852) and the water coefficient from −12.79 to −0.17
+(N 83 to 6,852); both 95% intervals include zero under either assumption.
+These comparisons depend on how absent categories are interpreted. Total-spending
+estimates and the Table C15 fuzzy-RD replication are unchanged. Full-precision
+results are in `cdm_mnrega_local_ols.csv` and `cdm_mnrega_ols.csv` under `output/`.
 
 ### Linkage and validation
 

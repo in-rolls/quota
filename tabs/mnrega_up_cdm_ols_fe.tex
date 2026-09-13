@@ -2,7 +2,7 @@
 \centering
 \begin{threeparttable}
 
-  \caption{Female Reservation and MNREGA Spending (UP 2015, ols_fe)} 
+  \caption{Female Reservation and MNREGA Spending (UP 2015, District FE)} 
   \label{tab:mnrega_up_cdm_ols_fe} 
 \scriptsize 
 \begin{tabular}{@{\extracolsep{0pt}}lcccccc} 
@@ -11,13 +11,13 @@
  & Sanit. Post & Water Post & Total Post & Sanit. Pre & Water Pre & Total Pre \\ 
 \\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6)\\ 
 \hline \\[-1.8ex] 
- Female Reservation & 0.001 & $-$0.01 & $-$0.06$^{**}$ & $-$0.003 & $-$0.001 & $-$0.02 \\ 
-  & (0.002) & (0.01) & (0.02) & (0.005) & (0.01) & (0.01) \\ 
-  Constant & 0.01 & 0.005 & 0.26 & 0.19 & 0.001 & 0.30 \\ 
-  & (0.01) & (0.01) & (0.10) & (0.04) & (0.02) & (0.07) \\ 
+ Female Reservation & 0.0001 & $-$0.0001 & $-$0.06$^{**}$ & $-$0.0001 & 0.0000 & $-$0.02 \\ 
+  & (0.001) & (0.0001) & (0.02) & (0.002) & (0.0001) & (0.01) \\ 
+  Constant & 0.004 & 0.0000 & 0.26 & 0.02 & 0.0000 & 0.30 \\ 
+  & (0.003) & (0.0004) & (0.10) & (0.01) & (0.0003) & (0.07) \\ 
  \hline \\[-1.8ex] 
-Observations & 2,643 & 107 & 8,688 & 2,631 & 83 & 8,446 \\ 
-Adjusted R$^{2}$ & 0.10 & 0.30 & 0.20 & 0.13 & 0.30 & 0.17 \\ 
+Observations & 8,688 & 8,688 & 8,688 & 8,446 & 8,446 & 8,446 \\ 
+Adjusted R$^{2}$ & 0.05 & 0.02 & 0.20 & 0.01 & 0.01 & 0.17 \\ 
 \hline 
 \hline \\[-1.8ex] 
 \textit{Note:}  & \multicolumn{6}{l}{$^{*}$p$<$0.05; $^{**}$p$<$0.01; $^{***}$p$<$0.001} \\ 
@@ -28,7 +28,9 @@ Adjusted R$^{2}$ & 0.10 & 0.30 & 0.20 & 0.13 & 0.30 & 0.17 \\
 \item[] Outcomes: MNREGA spending in thousands of rupees per person.
 \item[] Pre = FY 2012--13 through 2015--16; Post = FY 2016--17 through 2018--19.
 \item[] FY 2015--16 spans the October 2015 election.
-\item[] Period totals sum observed years; entirely missing periods are excluded.
+\item[] Absent categories are set to zero when both total spending components
+\item[] are reported for that GP-year; other missing amounts remain missing.
+\item[] Period totals sum available years; entirely missing periods are excluded.
 \item[] These associations do not implement the source paper's fuzzy RD.
 \item[] Data: Chaturvedi, Das \& Mahajan (2023).
 \end{tablenotes}
