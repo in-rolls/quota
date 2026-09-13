@@ -23,7 +23,7 @@ source(here("scripts/00_utils.R"))
 # https://www.ijamtes.org/gallery/156.aug%20ijmte%20%20-%20879.pdf
 # https://www.inspirajournals.com/uploads/Issues/136293092.pdf
 
-elex_raj_05_10 <- read_csv(here("data/raj/sp_2005_2010 - sp_2005_2010.csv")) %>%
+elex_raj_05_10 <- read_csv(raj_path("data/source/sarpanch/sp_2005_2010_manually_reviewed.csv")) %>%
      mutate(match_name = normalize_string(paste(dist_name_new_2010, samiti_name_new_2010, gp_new_2010))) %>%
      filter(is.na(nuke)) %>%
      group_by(match_name) %>%
@@ -43,7 +43,7 @@ elex_raj_05_10 <- read_csv(here("data/raj/sp_2005_2010 - sp_2005_2010.csv")) %>%
 write_parquet(elex_raj_05_10, sink = here("data/raj/elex_raj_05_10.parquet"))
 
 # 05_10_15_20
-elex_raj_05_20 <- read_csv(here("data/raj/sp_05_10_15_20_best_manual.csv")) %>%
+elex_raj_05_20 <- read_csv(raj_path("data/source/sarpanch/sp_05_10_15_20_best_manual.csv")) %>%
      mutate(match_name = normalize_string(paste(dist_name_new_2010, samiti_name_new_2010, gp_new_2010))) %>%
      group_by(match_name) %>%
      filter(n() == 1) %>%

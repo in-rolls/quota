@@ -25,3 +25,5 @@ Don Green, Manu Singh, and Gaurav Sood
 - [in-rolls/local_elections_kerala](https://github.com/in-rolls/local_elections_kerala) — Kerala Local Government Seat Reservation Data and Winner Attributes
 - [in-rolls/local_elections_up](https://github.com/in-rolls/local_elections_up) — UP Local Election Data --- GP and ULB. Seat reservation, winner, and candidates for some elections
 - [in-rolls/local_elections_bihar](https://github.com/in-rolls/local_elections_bihar) — Candidate Info. + Valid Votes Won by Cands. in the 2016 Bihar Panchayat Elections
+
+Rajasthan election sources and historical manual election linkages are consumed from a pinned commit of `local_elections_rajasthan`, with SHA-256 checks in `data/manifest.yaml`. Files resolve from the versioned cache, a sibling checkout, or the pinned GitHub source. The migration preserves source values and historical links; study-specific exclusions and election-to-outcome joins remain here.
