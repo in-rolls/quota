@@ -1,0 +1,66 @@
+# Data this repository uses but does not own.
+#
+# Each entry pins a version and a sha256. `up_path()` and `ref_path()` in
+# scripts/00_utils.R resolve these: they look in the local cache, fall back to a
+# sibling clone, otherwise download -- and always verify the checksum before
+# handing back a path. A mismatch is an error, never a silent substitution.
+#
+# The checksums were taken from the copies that were in data/up/ when this file
+# was written, so a fetch that returns anything else proves the data moved.
+
+cache_dir: ~/data
+
+upstream:
+  local_elections_rajasthan:
+    repo: in-rolls/local_elections_rajasthan
+    ref: b543c4759519dd44682fbd278d81bdccaa152e99
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections_rajasthan
+    sibling: ../local_elections_rajasthan
+    files:
+      data/source/sarpanch/sarpanch_2005.csv: 642c992acc6aa6f81dcfdfbe630a71b017aff551736c435e3ac839bbd85e2c92
+      data/source/sarpanch/sarpanch_2010.csv: 84c9ed22680e75ac5e06f05fcc93e57bc38cc6d835e5cb22887e9d5f982089db
+      data/source/sarpanch/sarpanch_2015.csv: cffa013832efa807b67ee8fe6d42ef4511a3d29f2e48243e1af8707ffeaf7c79
+      data/source/sarpanch/sarpanch_2015_manual_sex.csv: 4b787ccd8115cbdf4edcf22ae38aa2b7b02e8e9be48dd3e6c696e69965901cc0
+      data/source/sarpanch/sarpanch_2020_clean.csv: 0f13bc76ea6d5203a55bb42d858fc832852136f18afd0cc7baf6fd66422f0449
+      data/source/sarpanch/sp_2005_2010_manually_reviewed.csv: 05257b7240f04498ee5a2322decc2a16a3a97fb2212e5cfb93db13730a6ee04b
+      data/source/sarpanch/sp_05_10_15_20_best_manual.csv: a7eee0ce69fe8536e6db682c4ac62522b633833ac79ceee51eb7d0f11fb0d395
+  local_elections_up:
+    repo: in-rolls/local_elections_up
+    ref: 9f051cd607b9a42aa3afc498e57737200ef22024
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections_up
+    sibling: ../local_elections_up
+    files:
+      data/fin/up_gp_adjacent_links.parquet: 16e7f28ebd926b2db6b0cecd0f767ab7335b63429a95dcb0dac25526f54df5e9
+      data/fin/up_gp_four_election_links.parquet: af379f5a584dffdcd8062d48c39c697c5dda4ab198632eb973f409b3623733b7
+      data/fin/up_gp_panel_2005_2010.parquet: 95b7578b6165206fdf3e8adfa1cdd201443ad424f5399fa907774521dbdf9af0
+      data/fin/up_gp_panel_2005_2010_2015_2021.parquet: a056c15ae9d56d88e5f2ef5a26a8681cfd4df8cc7c981dd7e0e14e431d2acb97
+      data/fin/up_gp_panel_2010_2015.parquet: ddf624786ead6f20480abe442be6fa52528f2e486648bb5bda151d91a9337a15
+      data/fin/up_gp_panel_2015_2021.parquet: da125f69f71a24993843b5400ffea4f8239fd418ac96e0b0bf8e382659c25444
+      data/fin/weaver_20250302_wide.parquet: e7a6411af5b2980255c670d80af1c171baaef431515157ab35f1addac90eb695
+      data/fin/weaver_20250317_wide.parquet: d2a3a0c5ee079850e83ef241d5ad9e5bb4198fa725c76ec9f0a4b520f7a46f85
+      data/fin/up_gp_sarpanch_2005_fixed_with_transliteration.parquet: 2d5826be50563a7b978cabd451f6fb0505909339b59429dbe6144b9e129f24d6
+      data/fin/up_gp_sarpanch_2010_fixed_with_transliteration.parquet: 81cbf6d0b25c369a9c9b905b37fe31bbf185538609c27c6c53f53a1ed2a34c74
+      data/fin/up_gp_sarpanch_2015_fixed_with_transliteration.parquet: 2e7cde2ad328d9a7f7d8ad078295e47ef274f48f22b0272a6aaf10ed00cf9b45
+      data/fin/up_gp_sarpanch_2021_fixed_with_transliteration.parquet: 4b02015d5e4e827ff272d7f8201a87b28c7a8a7e184c086d89f3371834125d16
+      data/external/weaver/weaver_data.dta.gz: 1e561493bfda584b29f312080a91b0ff2a1580fea0081248e45614f7599dee11
+      data/external/weaver/weaver_data_2.dta.gz: 2a79036d7de6c1bfcfd17fdad7652caad58d70458a298eb1ad534fd383515aec
+      data/external/weaver/nw_election10.dta.gz: dca9d0c13040d40893f6557e7b8ace969c9780ac9867e9aea02949eda9b30d21
+      data/external/weaver/nw_elections_analysis.dta.gz: be188ed096e8771836991534bafceb7429dcb5a13a9bb0a28de2790df5b4232c
+      data/external/weaver/nw_up_nregs.dta.gz: 02401e2a879bbe5c887f4c6dc14c899e6aa684dc3f958695ffcc56ea76332fdf
+
+reference:
+  shrug:
+    version: "2.0"
+    source: https://devdatalab.org/shrug
+    licence: CC BY-NC-SA 4.0
+    # Asher, Lunt, Matsuura & Novosad (2021), World Bank Economic Review 35(4).
+    # Each subdirectory keeps its own README.md and .bib -- the licence requires
+    # the attribution to travel with the data.
+    cache: shrug/2.0
+    files:
+      shrug-antyodaya-csv/antyodaya_shrid.csv.zip: b22801c282c7b56dbda825fc1683d3a485868f1087100ea4209aa3dfbad0e677
+      shrug-pc-keys-csv/pc11r_shrid_key.csv: 7a7aebcf3a3ac1503c601ccabb6052c4aff34ffbc257f0d7295ef6e922303dac
+      shrug-pca01-csv/pc01_pca_clean_shrid.csv.zip: a48fe8bc92718dcba62c285a2003c8f2e9f3def0102b3540b761d6a502344e6a
+      shrug-pca11-csv/pc11_pca_clean_shrid.csv: 2f0e57667641dfbf731cbc9bfad8d8bd3690873a556ed01cb38bc467280c8ff2
+      shrug-secc-mord-rural-csv/secc_rural_shrid.csv.zip: a9437371528c31efe5fd0dc14bc9848b43b4c537ecd1cc777590fbc4d0c03606
+      shrug-vd01-csv/pc01_vd_clean_shrid.csv.zip: 9fad32229b93db35639732c6e1c64489038735e01758e548ce73ba8f3a3f7c95

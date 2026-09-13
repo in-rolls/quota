@@ -8,10 +8,12 @@ library(kableExtra)
 library(here)
 library(haven)
 
+source(here("scripts/00_utils.R"))
+
 # Let's use the data joined to MNREGA
-up_10 <- read_dta(here("~/Library/CloudStorage/Dropbox/India Reservations/data/narasimhan_weaver/Data/analysis_data/gp_elections/election10.dta"))
-up_15_20 <- read_dta(here("~/Library/CloudStorage/Dropbox/India Reservations/data/narasimhan_weaver/Data/analysis_data/gp_elections/elections_analysis.dta"))
-up_nregs <- read_dta(here("~/Library/CloudStorage/Dropbox/India Reservations/data/narasimhan_weaver/Data/analysis_data/nregs/up_nregs.dta"))
+up_10 <- read_dta(ref_path("nw_election10.dta.gz"))
+up_15_20 <- read_dta(ref_path("nw_elections_analysis.dta.gz"))
+up_nregs <- read_dta(ref_path("nw_up_nregs.dta.gz"))
 
 up_15_20r <- up_15_20 %>%
      filter(gp_code_lgd21 != "") %>%

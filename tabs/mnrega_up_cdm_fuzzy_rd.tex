@@ -1,0 +1,28 @@
+\begin{table}[!h]
+\centering
+\caption{\label{tab:mnrega-up-cdm-fuzzy-rd}Female reservation and NREGS spending: replication of CDM Table C15}
+\centering
+\fontsize{9}{11}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{lrrrrrr}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{3}{c}{Overall} & \multicolumn{3}{c}{By Muslim share} \\
+\cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){5-7}
+ & (1) & (2) & (3) & (4) & (5) & (6)\\
+\midrule
+Female reservation & 0.0065 & 0.0065 & 0.0091 & -0.0097 & -0.0094 & -0.0056\\
+ & (0.0240) & (0.0289) & (0.0372) & (0.0319) & (0.0383) & (0.0493)\\
+Reservation $\times$ Muslim share &  &  &  & 0.1392 & 0.1406 & 0.1324\\
+ &  &  &  & (0.1546) & (0.1762) & (0.2137)\\
+Muslim share &  &  &  & -0.1310 & -0.1730 & -0.2122\\
+ &  &  &  & (0.0597) & (0.0681) & (0.0848)\\
+Bandwidth & 0.100 & 0.075 & 0.050 & 0.100 & 0.075 & 0.050\\
+Control mean & 0.2973 & 0.2943 & 0.2892 & 0.2973 & 0.2943 & 0.2892\\
+Panchayats & 8,648 & 6,822 & 4,978 & 8,648 & 6,822 & 4,978\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item Outcome: total NREGS expenditure per person in FY 2016--17, in thousands of rupees. Local linear 2SLS with triangular weights and separate slopes across the assignment cutoff. Assignment instruments reservation; in columns (4)--(6), assignment interacted with Muslim share also instruments reservation interacted with that share. These columns include Muslim share and its interactions with both slopes; the reservation coefficient is the effect at zero Muslim share. The running variable follows the source analysis. Missing outcomes are excluded. Control means are unweighted means below or at the cutoff in each estimation sample. Heteroskedasticity-robust (HC0) standard errors in parentheses; one observation per panchayat. Source: Chaturvedi, Das and Mahajan (2023), Table C15, and their replication files.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

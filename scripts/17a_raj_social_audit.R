@@ -20,7 +20,7 @@ mnrega_elex_raj_05_20 <- read_parquet(here("data/raj/mnrega_elex_raj_05_20.parqu
      dplyr::rename(match_name = match_name.x)
 
 # Social Audit Read and transform
-mnrega_raj_sa <- read_csv(here("data/mnrega/final_audit_results_translit.csv"))
+mnrega_raj_sa <- read_csv(here("data/mnrega/final_audit_results_translit.csv.gz"))
 
 mnrega_raj_sa <- mnrega_raj_sa %>%
      filter(state == 'RAJASTHAN') %>%
