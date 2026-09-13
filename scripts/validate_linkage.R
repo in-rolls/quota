@@ -68,6 +68,17 @@ test_that("runner-up margins retain near-ties before thresholding", {
   expect_true(all(match_panchayats(e, g)$election_margin == 0))
 })
 
+test_that("different numbered panchayats cannot match", {
+  for (pair in list(c("GP 45", "GP 44"), c("GP ४५", "GP ४४"),
+                    c("ganganagarpadampur35bb", "ganganagarpadampur23bb"))) {
+    e <- tibble(election_id = "a", election_name = pair[1])
+    g <- tibble(local_body_code = "1", lgd_name = pair[2])
+    expect_false(any(
+      match_panchayats(e, g)$match_status %in% c("exact", "fuzzy")
+    ))
+  }
+})
+
 for (state in c("raj", "up")) {
   d <- arrow::read_parquet(here(
     "data", state, paste0("shrug_lgd_", state, "_elex_05_10.parquet")

@@ -10,60 +10,89 @@ library(stargazer)
 # Source utils
 source(here("scripts/00_utils.R"))
 
-# Load dat
-raj_elex_shrug <- read_parquet(here("data/raj/shrug_lgd_raj_elex_05_10.parquet"))
-ay   <- read_csv(here("data/shrug/shrug-antyodaya-csv/antyodaya_shrid.csv"))
-secc <- read_csv(here("data/shrug/shrug-secc-mord-rural-csv/secc_rural_shrid.csv"))
-
-raj_elex_ay <- raj_elex_shrug %>% 
-     inner_join(ay, by = "shrid2") %>%
-     inner_join(secc, by = "shrid2")
-
-# s.e. and beta are weird--- we don't see any sig. effects but for now don't feel comfortable adding these
-# #"two_crop_acre_sum" = "Irrigation" #"Irrigation: Total land with assured irrigation for two crops" 
-
-# interactions
-
 other_var <- list(
-     "total_female_child_age_bw_0_6" = "Female Children",
-     "total_hhd_having_bpl_cards" = "BPL Cards",
-     "total_no_of_eligible_beneficiari" = "Maternity Benefit",
-     "wall_mat_solid_share" = "Solid Wall",
-     "roof_mat_solid_share" = "Solid Roof"
-     )
+  "total_female_child_age_bw_0_6" = "Female Children",
+  "total_hhd_having_bpl_cards" = "BPL Cards",
+  "total_no_of_eligible_beneficiari" = "Maternity Benefit",
+  "wall_mat_solid_share" = "Solid Wall",
+  "roof_mat_solid_share" = "Solid Roof"
+)
 
+housing_vars <- c("wall_mat_solid_share", "roof_mat_solid_share")
+
+# Load dat
+raj_elex_shrug <- read_parquet(
+  here("data/raj/shrug_lgd_raj_elex_05_10.parquet")
+)
+stopifnot(
+  !anyNA(raj_elex_shrug$local_body_code),
+  !anyDuplicated(raj_elex_shrug$shrid2),
+  !anyDuplicated(distinct(
+    raj_elex_shrug, local_body_code,
+    female_res_2005, female_res_2010
+  )$local_body_code)
+)
+ay <- read_csv(
+  shrug_path("shrug-antyodaya-csv/antyodaya_shrid.csv.zip"),
+  col_select = any_of(c("shrid2", names(other_var))),
+  col_types = cols(.default = col_double(), shrid2 = col_character())
+)
+secc <- read_csv(
+  shrug_path("shrug-secc-mord-rural-csv/secc_rural_shrid.csv.zip"),
+  col_select = all_of(c("shrid2", "secc_hh", housing_vars)),
+  col_types = cols(.default = col_double(), shrid2 = col_character())
+)
+
+raj_elex_ay <- raj_elex_shrug |>
+  inner_join(ay, by = "shrid2", relationship = "one-to-one") |>
+  inner_join(secc, by = "shrid2", relationship = "one-to-one")
+
+stopifnot(
+  !anyNA(raj_elex_ay$secc_hh), all(raj_elex_ay$secc_hh > 0)
+)
+
+# Household weights aggregate shares; missing shares remain missing.
 # Let's create a GP Level dataset
-raj_elex_ay_total <- raj_elex_ay %>%
-     group_by(key) %>%
-     summarise(female_res_2005 = first(female_res_2005),
-               female_res_2010 = first(female_res_2010), 
-               across(
-                    .cols = all_of(names(other_var)),
-                    .fns = sum,
-                    .names = "{.col}"
-               )
-          )
+raj_elex_ay_total <- raj_elex_ay |>
+  group_by(local_body_code, female_res_2005, female_res_2010) |>
+  summarise(
+    across(all_of(setdiff(names(other_var), housing_vars)), sum),
+    across(all_of(housing_vars), ~ weighted.mean(.x, w = secc_hh)),
+    .groups = "drop"
+  )
 
 # Model Names
 model_names <- paste0("lm_", names(other_var))
-models <- set_names(names(other_var), names(other_var)) %>% 
-     map(~ lm(as.formula(paste(.x, "~ female_res_2005 + female_res_2010")), data = raj_elex_ay_total))
+models <- set_names(names(other_var), names(other_var)) |>
+  map(~ lm(
+    reformulate(c("female_res_2005", "female_res_2010"), .x),
+    data = raj_elex_ay_total
+  ))
 
 # Tidy and Glance
 model_tidies <- map(models, tidy)
 model_glances <- map(models, glance)
 
 custom_stargazer(models,
-          title = "Effects of Reservations on Other Short- and Long-term Outcomes",
-          covariate.labels = c("2005", "2010", "Constant"),
-          column.labels = unlist(unname(other_var)),
-          add.lines = list(c("Covariates", rep("No", length(other_var)))),
-          label = "raj_shrug_other_05_10",
-          notes = paste(cons_term, "The outcomes are from the Mission Antyodya Survey from 2019. 
-                   The village level outcomes have been aggregated to a GP level. The outcomes are: 
-                     (i) Female Children: The number of female children (0-6 years);
-                     (ii) BPL Cards: The number of households with a BPL ration card;
-                     (iii) Maternity Benefit: The number of eligible beneficiaries under Pradhan Mantri Matru Vandana Yojana (PMMVY)
-                     (iv) Solid Wall: Share of households with solid wall - wood/stone/sheets/burnt brick/concrete;
-                     (v) Solid Roof: Share of households with solid roof - stone/slate sheets/concrete burned brick."),
-          out = "tabs/shrug_raj_05_10_other.tex")
+  digits = 3,
+  title = "Effects of Reservations on Other Short- and Long-term Outcomes",
+  covariate.labels = c("2005", "2010", "Constant"),
+  column.labels = unlist(unname(other_var)),
+  add.lines = list(c("Covariates", rep("No", length(other_var)))),
+  label = "raj_shrug_other_05_10",
+  notes = paste(
+    cons_term,
+    "The first three outcomes are from the Mission Antyodya Survey from
+    2019; housing shares are from SECC (2012). Counts are summed to GP
+    level; shares use SECC household counts as weights. A GP housing
+    share is missing if any linked village share is missing. The outcomes
+    are: (i) Female Children: The number of female children (0-6 years);
+    (ii) BPL Cards: The number of households with a BPL ration card;
+    (iii) Maternity Benefit: The number of eligible beneficiaries under
+    Pradhan Mantri Matru Vandana Yojana (PMMVY); (iv) Solid Wall: Share
+    of households with solid wall - wood/stone/sheets/burnt
+    brick/concrete; (v) Solid Roof: Share of households with solid roof -
+    stone/slate sheets/concrete burned brick."
+  ),
+  out = "tabs/shrug_raj_05_10_other.tex"
+)

@@ -193,13 +193,13 @@ comp_expenditure <- paste0(
 
 comp_expenditure_models <- main_models[names(main_models) %in% comp_expenditure]
 
-custom_stargazer(n_ongoing_models,
+custom_stargazer(comp_expenditure_models,
                  title = "Effects of Reservations on the Expenditure on Completed MNREGA Projects, 2011-2014",
                  covariate.labels = c("2005", "2010", "Constant"),
                  column.labels = c("All", "Rural Roads", "Sanitation", "Water Conservation", "Trad. Water"),
                  add.lines = list(c("Covariates", rep("No", 5))),
                  label = "main_mnrega_expenditure",
-                 notes = paste(cons_term, "The outcomes are from MNREGA administrative data for years 2011--2014.", 
+                 notes = paste(cons_term, "The outcomes are from MNREGA administrative data for years 2011--2014; expenditure is in lakh rupees.",
                                "They are: 
                      (i) All: The expenditure on all the projects, including areas not listed here like Fisheries, Drought Proofing, etc.;
                      (ii) Rural Roads: The expenditure on projects to improve connectivity and roads;

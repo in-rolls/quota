@@ -13,7 +13,7 @@ cache_dir: ~/data
 upstream:
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
-    ref: 0455cf6c3c32ec3db1a0e50be2df18e50609cfab
+    ref: b543c4759519dd44682fbd278d81bdccaa152e99
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_rajasthan
     sibling: ../local_elections_rajasthan
     files:
@@ -26,7 +26,7 @@ upstream:
       data/source/sarpanch/sp_05_10_15_20_best_manual.csv: a7eee0ce69fe8536e6db682c4ac62522b633833ac79ceee51eb7d0f11fb0d395
   local_elections_up:
     repo: in-rolls/local_elections_up
-    ref: 11f010052b5b1030fb81defc2825f57502586698
+    ref: 9f051cd607b9a42aa3afc498e57737200ef22024
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_up
     sibling: ../local_elections_up
     files:

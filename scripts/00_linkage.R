@@ -21,6 +21,18 @@ match_panchayats <- function(elections, catalog, max_distance = 0.15) {
   )
   # Exact string equality is independent of floating-point distance rounding.
   distances[outer(elections$election_name, catalog$lgd_name, "==")] <- 0
+  election_numbers <- stringi::stri_extract_all_regex(
+    chartr("०१२३४५६७८९", "0123456789", elections$election_name), "\\p{N}+",
+    omit_no_match = TRUE
+  ) |>
+    vapply(paste, character(1), collapse = "|")
+  gp_numbers <- stringi::stri_extract_all_regex(
+    chartr("०१२३४५६७८९", "0123456789", catalog$lgd_name), "\\p{N}+",
+    omit_no_match = TRUE
+  ) |>
+    vapply(paste, character(1), collapse = "|")
+  numbered <- outer(election_numbers != "", gp_numbers != "", "&")
+  distances[numbered & outer(election_numbers, gp_numbers, "!=")] <- Inf
   aliases <- split(seq_len(nrow(catalog)), catalog$local_body_code)
   gp_distances <- vapply(aliases, function(columns) {
     apply(distances[, columns, drop = FALSE], 1, min)
