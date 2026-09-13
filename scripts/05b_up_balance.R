@@ -5,10 +5,11 @@ library(readr)
 library(dplyr)
 library(tidyr)
 library(purrr)
-library(fixest)
 library(estimatr)
 library(kableExtra)
 library(nnet)
+
+source(here("scripts/00_utils.R"))
 
 # Robustness
 # Pre-treatment covariates can be added
@@ -22,10 +23,10 @@ library(nnet)
 
 # Load dat
 up_elex_shrug <- read_parquet(here("data/up/shrug_lgd_up_elex_05_10.parquet"))
-vd_01 <- read_csv(here("data/shrug/shrug-vd01-csv/pc01_vd_clean_shrid.csv"))
+vd_01 <- read_csv(shrug_path("shrug-vd01-csv/pc01_vd_clean_shrid.csv.zip"))
 
 up_elex_vd_01 <- up_elex_shrug %>% 
-     inner_join(vd_01, by = "shrid2")
+     inner_join(vd_01, by = "shrid2", relationship = "one-to-one")
 
 # Notes
 # Literacy and children < 6 are from the census abstract
@@ -53,13 +54,11 @@ balance_vars <- list(
 )
 
 up_elex_vd_01 <- up_elex_vd_01 %>%
-     mutate(treat = paste(female_res_2005, female_res_2010, sep = "-"),
-            treat = recode(treat,
-                           `0-0` = "NF-NF",
-                           `0-1` = "NF-F",
-                           `1-0` = "F-NF",
-                           `1-1` = "F-F"),
-            cluster_id = paste(district_name_eng_2005, block_name_eng_2005, gp_name_eng_2005, sep = "-"))  
+     mutate(treat = factor(
+                 paste(as.integer(female_res_2005), as.integer(female_res_2010), sep = "-"),
+                 levels = c("1-1", "1-0", "0-1", "0-0"),
+                 labels = c("F-F", "F-NF", "NF-F", "NF-NF")
+            ), cluster_id = local_body_code)  
 
 # GP Level
 up_elex_vd_01_gp <- up_elex_vd_01 %>%
@@ -97,6 +96,7 @@ calculate_ri_p_value <- function(var, df, n_permutations = 1000) {
      return(p_value)
 }
 
+set.seed(31415)
 f_stats <- map_dbl(names(balance_vars), ~ calculate_ri_p_value(.x, up_elex_vd_01_gp))
 
 balance_wide <- up_elex_vd_01_gp %>%
